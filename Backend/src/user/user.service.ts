@@ -4,15 +4,15 @@ export class UserService {
     private prisma = new PrismaClient()
 
     async create() {
-        const addedUser = await this.prisma.user.create({})
+        // const addedUser = await this.prisma.user.create({})
 
-        return addedUser
+        // return addedUser
     }
 
     async read(userId: string) {
-        const user = await this.prisma.user.find({
+        const user = await this.prisma.user.findMany({
             where: {
-                userId
+                user_id: userId
             }
         })
 
@@ -20,13 +20,13 @@ export class UserService {
     }
 
     async update() {
-        const updatedUser = await this.prisma.user.update({})
+        // const updatedUser = await this.prisma.user.update({})
     }
 
     async delete(userId: string) {
         const deletedUser = await this.prisma.user.delete({
             where: {
-                userId
+                user_id: userId
             }
         })
 
