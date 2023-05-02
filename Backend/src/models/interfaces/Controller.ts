@@ -1,3 +1,3 @@
-export interface Controller {
+export interface IController {
     execute(): void
 }

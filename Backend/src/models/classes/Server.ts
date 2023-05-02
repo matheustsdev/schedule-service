@@ -1,7 +1,6 @@
 import express from "express"
-import { Route } from "./models/classes/routes/Route";
-import { UserController } from "./user/user.controller";
-import { Controller } from "./models/interfaces/Controller";
+import { Route } from "./routes/Route";
+import { Controller } from "../interfaces/Controller";
 
 export class Server{
 
@@ -14,11 +13,16 @@ export class Server{
         }
 
         this.app.listen(this.port, () => console.log(`Server is running in port ${this.port} 🚀`))
+        
+        this.app.use(express.json())
+
         this.app.use(Route.route)
 
         controllers.forEach(controller => {
             controller.execute()
         })
+
+        
 
     }
 }
