@@ -1,5 +1,6 @@
 import { PrismaClient, User } from "@prisma/client";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
+import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 
 export class UserService {
     private prisma = new PrismaClient()
@@ -41,8 +42,15 @@ export class UserService {
         return user
     }
 
-    async update() {
-        // const updatedUser = await this.prisma.user.update({})
+    async update(userId: string, data: IUpdateUserDTO) {
+        const updatedUser = await this.prisma.user.update({
+            where: {
+                user_id: userId
+            }, 
+            data: data
+        })
+
+        return updatedUser
     }
 
     async delete(userId: string) {

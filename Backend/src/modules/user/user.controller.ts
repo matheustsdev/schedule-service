@@ -7,7 +7,9 @@ import { Post } from "../../models/classes/routes/Post";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { Delete } from "../../models/classes/routes/Delete";
 
-import { genSalt, getRounds, hash } from "bcrypt"
+import { genSalt, hash } from "bcrypt"
+import { IUpdateUserDTO } from "./dtos/updateUser.dto";
+import { Patch } from "../../models/classes/routes/Patch";
 
 export class UserController implements IController {
     private userService: UserService = new UserService();
@@ -77,11 +79,29 @@ export class UserController implements IController {
         })
     }
 
+    private async updateUser() {
+        new Patch("/user/update", async (request: Request, response: Response) => {
+            const { userId } = request.query
+            const data = request.body as IUpdateUserDTO
+
+            if(userId) {
+                const updatedUser = await this.userService.update(userId.toString(), data)
+                return response.json(updatedUser)
+            }
+
+            return response.status(404).json({
+                error: "E01",
+                description: "Não foi encontrado o user_id como query na requisição."
+            })
+
+        })
+    }
+
     execute() {
         this.getUser()
         this.createUser()
         this.deleteUser()
+        this.updateUser()
         this.getUserByEmail()
     }
 }
-
