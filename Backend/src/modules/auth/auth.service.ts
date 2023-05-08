@@ -1,14 +1,34 @@
 import { compare } from "bcrypt";
 import { IUserAuthDTO } from "./dtos/userAuth.dto";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
+import { UserService } from "../user/user.service";
 
 export class AuthService {
     private prisma = new PrismaClient()
+    private userService = new UserService()
 
-    async auth({email, hashPassword, receivedPassword, salt}: IUserAuthDTO) {
+    private async checkPassword(user: User, triedPassword: string) {
 
-        const isAuthorized = await compare(receivedPassword, hashPassword)
+        const isAuthorized = await compare(triedPassword, user.password)
 
-        console.log(isAuthorized)
+        return isAuthorized
+    }
+
+    private async createToken(user: User) {
+
+    }
+
+    async auth({email, triedPassword}: IUserAuthDTO) {
+        const user = await this.userService.readWithEmail(email);
+
+        if(!user) 
+            return undefined;
+        
+        const isCheckedPassword = this.checkPassword(user, triedPassword)
+        
+        if(!isCheckedPassword)
+            return {error: "Senha incorreta!"}
+        
+        
     }
 }
