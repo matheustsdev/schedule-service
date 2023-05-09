@@ -2,6 +2,7 @@ import { compare } from "bcrypt";
 import { IUserAuthDTO } from "./dtos/userAuth.dto";
 import { PrismaClient, User } from "@prisma/client";
 import { UserService } from "../user/user.service";
+import jwt from "jsonwebtoken";
 
 export class AuthService {
     private prisma = new PrismaClient()
@@ -15,20 +16,27 @@ export class AuthService {
     }
 
     private async createToken(user: User) {
+        const visibleUserData = {
+            name: user.name,
+            email: user.email,
+            phone: user.phone
+        }
+        const token = jwt.sign(visibleUserData, "1234")
 
+        return token
     }
 
-    async auth({email, triedPassword}: IUserAuthDTO) {
+    async auth({email, password}: IUserAuthDTO) {
         const user = await this.userService.readWithEmail(email);
 
         if(!user) 
             return undefined;
         
-        const isCheckedPassword = this.checkPassword(user, triedPassword)
+        const isCheckedPassword = await this.checkPassword(user, password)
         
         if(!isCheckedPassword)
             return {error: "Senha incorreta!"}
         
-        
+        return this.createToken(user)
     }
 }
