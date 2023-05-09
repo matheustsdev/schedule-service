@@ -23,7 +23,7 @@ model User {
 model Service {
   service_id    String    @id @default(uuid())
   name          String    @unique
-  description   String
-  price         String    //Decimal?    
-  time          String    
+  description   String?
+  price         Decimal   
+  time          Int    
 }
