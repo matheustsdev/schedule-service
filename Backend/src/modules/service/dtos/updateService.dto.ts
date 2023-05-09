@@ -1,6 +1,6 @@
 export interface IUpdateServiceDTO{
-    name?: String;
-    description?: String;
-    price?: String;    
-    time?: String;  
+    name?: string;
+    description?: string;
+    price?: string;    
+    time?: string;  
 }

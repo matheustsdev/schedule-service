@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 
-//importando métodos http 
 import { Get } from "../../models/classes/routes/Get";
 import { Post } from "../../models/classes/routes/Post";
 import { Delete } from "../../models/classes/routes/Delete";
@@ -12,7 +11,6 @@ import { IController } from "../../models/interfaces/Controller";
 import { ICreateServiceDTO } from "./dtos/createService.dto";
 import { IUpdateServiceDTO } from "./dtos/updateService.dto";
 
-import { genSalt, hash } from "bcrypt"
 import { ServiceService } from "./service.service";
 
 export class ServiceController implements IController {

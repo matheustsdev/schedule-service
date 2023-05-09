@@ -1,5 +1,5 @@
-import { PrismaClient, Service } from "@prisma/client";
-import { ICreateServiceDTO } from "./dtos/createService.dto";
+import { PrismaClient, Service } from "@prisma/client"
+import { ICreateServiceDTO } from "./dtos/createService.dto"
 import { IUpdateServiceDTO } from "./dtos/updateService.dto"
 
 export class ServiceService {

@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:admin@localhost:8080/postgres"
+  url      = "postgresql://postgres:admin@localhost:5432/postgres"
 
 }
 
@@ -24,6 +24,6 @@ model Service {
   service_id    String    @id @default(uuid())
   name          String    @unique
   description   String
-  price         String //Decimal?    
+  price         String    //Decimal?    
   time          String    
 }
