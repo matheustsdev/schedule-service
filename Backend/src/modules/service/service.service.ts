@@ -19,6 +19,15 @@ export class ServiceService {
         return {} as Service
     }
 
-    
+    async update(serviceId: string, data: IUpdateServiceDTO) {
+        const updatedService = await this.prisma.service.update({
+            where: {
+                service_id: serviceId
+            }, 
+            data: data
+        })
+
+        return updatedService
+    }
 
 }   
