@@ -32,7 +32,29 @@ export class ServiceController implements IController {
         })
     }
 
+    private async updateService() {
+        new Patch("/service/update", async (request: Request, response: Response) => {
+            const { serviceId } = request.query
+            const data = request.body as IUpdateServiceDTO
+
+            if(serviceId) {
+                const updatedService = await this.serviceService.update(serviceId.toString(), data)
+                return response.json(updatedService)
+            }
+
+            return response.status(404).json({
+                error: "E01",
+                description: "Não foi encontrado o user_id como query na requisição."
+            })
+
+        })
+    }
+
+
+
+
     execute() {
         this.createService()
+        this.updateService()
     }
 }
