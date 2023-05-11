@@ -1,6 +1,6 @@
+import { User } from "@prisma/client";
+
 export interface IUserAuthDTO {
     email: string;
-    salt: string;
-    receivedPassword: string;
-    hashPassword: string;
+    password: string;
 }

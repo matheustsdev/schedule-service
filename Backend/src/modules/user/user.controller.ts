@@ -29,7 +29,7 @@ export class UserController implements IController {
     }
 
     private async getUserByEmail() {
-        new Get("/user/auth", async (request: Request, response: Response) => {
+        new Get("/user/email", async (request: Request, response: Response) => {
             const { query } = request
             
             let user: User | null = null

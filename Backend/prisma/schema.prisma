@@ -7,8 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:Yaslly123@localhost:5432/postgres"
-  
+  url      = "postgresql://postgres:admin@localhost:5432/postgres"
 }
 
 model User {
@@ -20,9 +19,18 @@ model User {
   phone       String?
 }
 
-model Schedule{
-  scheduleId  String   @id @default(uuid())
-  startTime   DateTime
-  endTime     DateTime
-  description String?
+model Service {
+  service_id    String    @id @default(uuid())
+  name          String    @unique
+  description   String?
+  price         Decimal   
+  time          Int    
 }
+
+model Schedule{
+  scheduleId    String   @id @default(uuid())
+  startTime     DateTime
+  endTime       DateTime
+  description   String?   
+}
+
