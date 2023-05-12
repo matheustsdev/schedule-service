@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts",
-    "migration:generate": "npx prisma migrate dev --name"
+    "migrate": "npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",

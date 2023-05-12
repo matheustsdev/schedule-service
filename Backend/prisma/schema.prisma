@@ -11,26 +11,40 @@ datasource db {
 }
 
 model User {
-  user_id     String    @id @default(uuid())
-  name        String    
-  email       String    @unique
-  password    String
-  salt        String
-  phone       String?
+  user_id  String     @id @default(uuid())
+  name     String
+  email    String     @unique
+  password String
+  salt     String
+  phone    String?
+  Schedule Schedule[]
 }
 
 model Service {
-  service_id    String    @id @default(uuid())
-  name          String    @unique
+  service_id  String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  price       Decimal
+  time        Int
+  Schedule    Schedule[]
+}
+
+model Schedule {
+  schedule_id   String   @id @default(uuid())
+  start_time    DateTime
+  end_time      DateTime
   description   String?
-  price         Decimal   
-  time          Int    
+  User          User     @relation(fields: [user_id_fk], references: [user_id])
+  user_id_fk    String
+  Service       Service  @relation(fields: [service_id_fk], references: [service_id])
+  service_id_fk String
 }
 
-model Schedule{
-  scheduleId    String   @id @default(uuid())
-  startTime     DateTime
-  endTime       DateTime
-  description   String?   
-}
+// primary keys
+// foreign keys
 
+// 1 - 1
+// 1 - N
+// N - N
+
+// */
