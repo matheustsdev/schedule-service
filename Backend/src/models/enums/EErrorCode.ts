@@ -1,0 +1,7 @@
+export enum EErrorCode {
+    MISSING_QUERY = "E01",
+    MISSING_BODY_DATA = "E02",
+    INCORRECT_PASSWORD = "E03",
+    EMAIL_ALREADY_EXISTS = "E04",
+    EMAIL_INCORRECT = "E05",
+}

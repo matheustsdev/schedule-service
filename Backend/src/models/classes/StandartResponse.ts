@@ -1,0 +1,17 @@
+import { EErrorCode } from "../enums/EErrorCode";
+import { EResponseStatus } from "../enums/EResponseStatus";
+
+export class StandartResponse<T> {
+    status: EResponseStatus;
+    data?: T;
+    error?: {
+        code: EErrorCode;
+        message: string;
+    }
+
+    constructor(status: EResponseStatus, data?: T, error?: { code: EErrorCode, message: string }) {
+        this.status = status;
+        this.data = data;
+        this.error = error;
+    }
+}
