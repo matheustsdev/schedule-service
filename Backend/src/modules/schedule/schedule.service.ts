@@ -14,7 +14,6 @@ export class ScheduleService {
                 }, 
                 data: data
             })
-    
             return updateSchedule
         } catch(ex){
             console.log(ex)
@@ -27,7 +26,6 @@ export class ScheduleService {
                 scheduleId: scheduleId
             }
         })
-
         return deleteSchedule ? deleteSchedule : {
             error: "E02",
             description: "Erro interno do servidor"
