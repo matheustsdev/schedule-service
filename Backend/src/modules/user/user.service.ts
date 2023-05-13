@@ -21,7 +21,7 @@ export class UserService {
     }
 
     async read(userId: string) {
-        const user = await this.prisma.user.findMany({
+        const user = await this.prisma.user.findUnique({
             where: {
                 user_id: userId
             }

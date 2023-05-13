@@ -10,21 +10,30 @@ import { Delete } from "../../models/classes/routes/Delete";
 import { genSalt, hash } from "bcrypt"
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 import { Patch } from "../../models/classes/routes/Patch";
+import { StandartResponse } from "../../models/classes/StandartResponse";
+import { EResponseStatus } from "../../models/enums/EResponseStatus";
+import { EErrorCode } from "../../models/enums/EErrorCode";
 
 export class UserController implements IController {
     private userService: UserService = new UserService();
 
     private async getUser() {
-        new Get("/user", async (request: Request, response: Response) => {
+        new Get<User>("/user", async (request, response) => {
             const { query } = request
             
-            let user: User[] = []
+            let user: User | null = null
         
             if(query.userId) {
                 user = await this.userService.read(query.userId.toString())
             }
-        
-           return response.json(user)
+
+            if(!user)
+                return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, undefined, {
+                    code: EErrorCode.EMAIL_INCORRECT,
+                    message: "Email incorreto"
+                }))
+
+            return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, user))
         })
     }
 
