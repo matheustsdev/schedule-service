@@ -28,7 +28,7 @@ export class UserController implements IController {
             }
 
             if(!user)
-                return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, undefined, {
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
                     code: EErrorCode.EMAIL_INCORRECT,
                     message: "Email incorreto"
                 }))
@@ -38,7 +38,7 @@ export class UserController implements IController {
     }
 
     private async getUserByEmail() {
-        new Get("/user/email", async (request: Request, response: Response) => {
+        new Get<User>("/user/email", async (request: Request, response: Response) => {
             const { query } = request
             
             let user: User | null = null
@@ -46,8 +46,14 @@ export class UserController implements IController {
             if(query.email) {
                 user = await this.userService.readWithEmail(query.email.toString())
             }
-        
-           return response.json(user)
+
+            if(!user)
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.EMAIL_INCORRECT,
+                    message: "Email incorreto"
+                }))
+
+            return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, user))
         })
     }
 
@@ -65,6 +71,9 @@ export class UserController implements IController {
                 name: name,
                 phone: phone,
             })
+
+            if(!createdUser)
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, 
 
             return response.json(createdUser)
         })
