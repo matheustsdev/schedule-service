@@ -19,18 +19,20 @@ export class UserController implements IController {
 
     private async getUser() {
         new Get<User>("/user", async (request, response) => {
-            const { query } = request
+            const { userId } = request.query
             
-            let user: User | null = null
-        
-            if(query.userId) {
-                user = await this.userService.read(query.userId.toString())
-            }
+            if(!userId) 
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'userId' não informada"
+                }))
+
+            const user = await this.userService.read(userId.toString())
 
             if(!user)
                 return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
-                    code: EErrorCode.EMAIL_INCORRECT,
-                    message: "Email incorreto"
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Usuário não encontrado"
                 }))
 
             return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, user))
@@ -39,18 +41,20 @@ export class UserController implements IController {
 
     private async getUserByEmail() {
         new Get<User>("/user/email", async (request: Request, response: Response) => {
-            const { query } = request
-            
-            let user: User | null = null
+            const { email } = request.query       
         
-            if(query.email) {
-                user = await this.userService.readWithEmail(query.email.toString())
-            }
+            if(!email) 
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'email' não informada"
+                }))
+
+            const user = await this.userService.readWithEmail(email.toString())
 
             if(!user)
                 return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
-                    code: EErrorCode.EMAIL_INCORRECT,
-                    message: "Email incorreto"
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Usuário não encontrado"
                 }))
 
             return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, user))
@@ -58,7 +62,7 @@ export class UserController implements IController {
     }
 
     private async createUser() {
-        new Post("/user/create", async (request: Request, response: Response) => {
+        new Post<User>("/user/create", async (request: Request, response: Response) => {
             const { email, password, name, phone } = request.body as ICreateUserDTO
 
             const createdSalt = await genSalt(4)
@@ -72,27 +76,31 @@ export class UserController implements IController {
                 phone: phone,
             })
 
-            if(!createdUser)
-                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, 
-
-            return response.json(createdUser)
+            return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, createdUser))
         })
     }
 
     private async deleteUser() {
         new Delete("/user/delete", async (request: Request, response: Response) => {
-            const { query } = request
+            const { userId } = request.query
 
-            if(query.userId) {
-                const deletedUser = await this.userService.delete(query.userId.toString())
+            if(!userId) 
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'userId' não informada"
+                }))
+            
 
-                return response.json(deletedUser)
-            } else {
-                return response.status(404).json({
-                    error: "E01",
-                    description: "Não foi encontrado o user_id como query na requisição."
-                })
-            }
+            const deletedUser = await this.userService.delete(userId.toString())
+
+            if(!deletedUser)
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Usuário não encontrado"
+                }))
+
+
+            return response.json(deletedUser)
 
         })
     }
@@ -102,16 +110,21 @@ export class UserController implements IController {
             const { userId } = request.query
             const data = request.body as IUpdateUserDTO
 
-            if(userId) {
-                const updatedUser = await this.userService.update(userId.toString(), data)
-                return response.json(updatedUser)
-            }
+            if(!userId) 
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'userId' não informada"
+                }))
 
-            return response.status(404).json({
-                error: "E01",
-                description: "Não foi encontrado o user_id como query na requisição."
-            })
+            const updatedUser = await this.userService.update(userId.toString(), data)
 
+            if(!updatedUser)
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.EMAIL_INCORRECT,
+                    message: "Email incorreto"
+                }))
+
+            return response.json(updatedUser)
         })
     }
 
