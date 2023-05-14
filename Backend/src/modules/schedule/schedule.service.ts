@@ -10,7 +10,7 @@ export class ScheduleService {
         try{
             const updateSchedule = await this.prisma.schedule.update({
                 where: {
-                    scheduleId: scheduleId
+                    schedule_id: scheduleId
                 }, 
                 data: data
             })
