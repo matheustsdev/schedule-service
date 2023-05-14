@@ -23,7 +23,7 @@ export class ScheduleService {
     async delete(scheduleId: string) {
         const deleteSchedule = await this.prisma.schedule.delete({
             where: {
-                scheduleId: scheduleId
+                schedule_id: scheduleId
             }
         })
         return deleteSchedule ? deleteSchedule : {
