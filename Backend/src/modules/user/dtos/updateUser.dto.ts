@@ -2,5 +2,6 @@ export interface IUpdateUserDTO {
     email?: string;
     password?: string;
     name?: string;
-    phone?: string
+    phone?: string;
+    role?: string
 }

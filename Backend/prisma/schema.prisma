@@ -17,7 +17,8 @@ model User {
   email       String    @unique
   password    String
   salt        String
-  phone       String?     
+  phone       String?
+  role        String?     
 }
 
 model Service {

@@ -44,7 +44,7 @@ export class UserController implements IController {
 
     private async createUser() {
         new Post("/user/create", async (request: Request, response: Response) => {
-            const { email, password, name, phone } = request.body as ICreateUserDTO
+            const { email, password, name, phone, role } = request.body as ICreateUserDTO
 
             const createdSalt = await genSalt(4)
             const encryptedPassword = await hash(password, createdSalt)
@@ -55,6 +55,7 @@ export class UserController implements IController {
                 password: encryptedPassword,
                 name: name,
                 phone: phone,
+                role: role
             })
 
             return response.json(createdUser)
