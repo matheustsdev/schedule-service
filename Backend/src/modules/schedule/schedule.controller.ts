@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClien, Schedule } from "@prisma/client";
 import { Get } from "../../models/classes/routes/Get";
 import { Post } from "../../models/classes/routes/Post";
 import { Delete } from "../../models/classes/routes/Delete";
@@ -8,6 +8,9 @@ import { IController } from "../../models/interfaces/Controller";
 import { ScheduleService } from "./schedule.service";
 import { ICreateScheduleDTO } from "./dtos/createSchedule.dto";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";
+import { StandartResponse } from "../../models/classes/StandartResponse";
+import { EResponseStatus } from "../../models/enums/EResponseStatus";
+import { EErrorCode } from "../../models/enums/EErrorCode";
 
 export class ScheduleController implements IController{
     private scheduleService: ScheduleService = new ScheduleService();
@@ -55,9 +58,55 @@ export class ScheduleController implements IController{
         })
     }
 
+    private async getScheduleByUser() {
+        new Get<Schedule>("/schedule/user", async (request: Request, response: Response) => {
+            const { user } = request.query       
+        
+            if(!user) 
+                return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'usuário' não informada"
+                }))
+
+            const schedule = await this.scheduleService.readWithUser(user.toString())
+
+            if(!schedule)
+                return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Agendamento não encontrado"
+                }))
+
+            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, schedule))
+        })
+    }
+
+    private async getScheduleByService() {
+        new Get<Schedule>("/schedule/service", async (request: Request, response: Response) => {
+            const { service } = request.query       
+        
+            if(!service) 
+                return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'serviço' não informada"
+                }))
+
+            const schedule = await this.scheduleService.readWithService(service.toString())
+
+            if(!schedule)
+                return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Agendamento não encontrado"
+                }))
+
+            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, schedule))
+        })
+    }
+
     execute(){
         this.deleteSchedule(),
-        this.updateSchedule()
+        this.updateSchedule(),
+        this.getScheduleByUser(),
+        this.getScheduleByService()
     }
 
 } 

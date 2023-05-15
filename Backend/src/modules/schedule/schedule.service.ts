@@ -31,4 +31,25 @@ export class ScheduleService {
             description: "Erro interno do servidor"
         }
     }
+
+
+    async readWithUser(user: string) {
+        const schedule = await this.prisma.schedule.findUnique({
+            where: {
+                user
+            }
+        })
+
+        return schedule
+    }
+
+    async readWithService(service: string) {
+        const schedule = await this.prisma.schedule.findUnique({
+            where: {
+                service
+            }
+        })
+
+        return schedule
+    }
 }
