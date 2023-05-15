@@ -17,6 +17,7 @@ model User {
   password String
   salt     String
   phone    String?
+  role     String?
   Schedule Schedule[]
 }
 
@@ -39,12 +40,3 @@ model Schedule {
   Service       Service  @relation(fields: [service_id_fk], references: [service_id])
   service_id_fk String
 }
-
-// primary keys
-// foreign keys
-
-// 1 - 1
-// 1 - N
-// N - N
-
-// */
