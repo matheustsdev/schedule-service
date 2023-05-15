@@ -60,15 +60,15 @@ export class ScheduleController implements IController{
 
     private async getScheduleByUser() {
         new Get<Schedule>("/schedule/user", async (request: Request, response: Response) => {
-            const { user } = request.query       
+            const { userId } = request.query       
         
-            if(!user) 
+            if(!userId) 
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
                     code: EErrorCode.MISSING_QUERY,
                     message: "Query 'usuário' não informada"
                 }))
 
-            const schedule = await this.scheduleService.readWithUser(user.toString())
+            const schedule = await this.scheduleService.readWithUser(userId.toString())
 
             if(!schedule)
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
@@ -82,15 +82,15 @@ export class ScheduleController implements IController{
 
     private async getScheduleByService() {
         new Get<Schedule>("/schedule/service", async (request: Request, response: Response) => {
-            const { service } = request.query       
+            const { serviceId } = request.query       
         
-            if(!service) 
+            if(!serviceId) 
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
                     code: EErrorCode.MISSING_QUERY,
                     message: "Query 'serviço' não informada"
                 }))
 
-            const schedule = await this.scheduleService.readWithService(service.toString())
+            const schedule = await this.scheduleService.readWithService(serviceId.toString())
 
             if(!schedule)
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
