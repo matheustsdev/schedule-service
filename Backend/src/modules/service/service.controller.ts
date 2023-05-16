@@ -50,11 +50,28 @@ export class ServiceController implements IController {
         })
     }
 
+    private async deleteService(){
+        new Delete("/service/delete", async (request: Request, response: Response) => {
+            const { serviceId } = request.query
 
+            if (serviceId) {
+                const deleteService = await this.serviceService.delete(serviceId.toString())
+
+                return response.json(deleteService)
+            } else {
+                return response.status(404).json({
+                    error: "E01",
+                    description: "Não foi encontrado o service_id como query na requisição."
+                })
+            }
+
+        })
+    }
 
 
     execute() {
         this.createService()
         this.updateService()
+        this.deleteService()
     }
 }

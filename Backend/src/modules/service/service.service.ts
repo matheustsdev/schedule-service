@@ -30,4 +30,16 @@ export class ServiceService {
         return updatedService
     }
 
+    async delete(serviceId: string) {
+        const deleteService = await this.prisma.service.delete({
+            where: {
+                service_id: serviceId
+            }
+        })
+        return deleteService ? deleteService : {
+            error: "E02",
+            description: "Erro interno do servidor"
+        }
+    }
+
 }   
