@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Schedule } from "@prisma/client";
 import { Get } from "../../models/classes/routes/Get";
 import { Post } from "../../models/classes/routes/Post";
 import { Delete } from "../../models/classes/routes/Delete";
@@ -8,6 +8,8 @@ import { IController } from "../../models/interfaces/Controller";
 import { ScheduleService } from "./schedule.service";
 import { ICreateScheduleDTO } from "./dtos/createSchedule.dto";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";
+import { StandartResponse } from "../../models/classes/StandartResponse";
+import { EResponseStatus } from "../../models/enums/EResponseStatus";
 
 export class ScheduleController implements IController{
     private scheduleService: ScheduleService = new ScheduleService();
@@ -55,9 +57,24 @@ export class ScheduleController implements IController{
         })
     }
 
+    private async createSchedule() {
+        new Post<Schedule>("/schedule/create", async (request: Request, response: Response) => {
+            const { startTime, endTime, description } = request.body as ICreateScheduleDTO
+
+            const createdSchedule = await this.scheduleService.create({
+                startTime: startTime,
+                endTime: endTime,
+                description: description
+            })
+
+            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, createdSchedule))
+        })
+      }
+
     execute(){
         this.deleteSchedule(),
         this.updateSchedule()
+       // this.createSchedule()
     }
 
 } 
