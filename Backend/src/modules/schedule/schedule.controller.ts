@@ -87,7 +87,7 @@ export class ScheduleController implements IController{
             if(!serviceId) 
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
                     code: EErrorCode.MISSING_QUERY,
-                    message: "Query 'serviço' não informada"
+                    message: "Query 'serviceId' não informada"
                 }))
 
             const schedule = await this.scheduleService.readWithService(serviceId.toString())

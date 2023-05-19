@@ -33,20 +33,20 @@ export class ScheduleService {
     }
 
 
-    async readWithUser(user: string) {
-        const schedule = await this.prisma.schedule.findUnique({
+    async readWithUser(userId: string) {
+        const schedule = await this.prisma.schedule.findMany({
             where: {
-                user
+                user_id_fk
             }
         })
 
         return schedule
     }
 
-    async readWithService(service: string) {
-        const schedule = await this.prisma.schedule.findUnique({
+    async readWithService(serviceId: string) {
+        const schedule = await this.prisma.schedule.findMany({
             where: {
-                service
+                service_id_fk
             }
         })
 
