@@ -1,3 +1,4 @@
 export interface IController {
-    execute(): void
+    execute(): void;
+    
 }

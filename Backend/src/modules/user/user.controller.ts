@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Get } from "../../models/classes/routes/Get";
 import { UserService } from "./user.service";
 import { User } from "@prisma/client";
-import { IController } from "../../models/interfaces/Controller";
+import { IController } from "../../models/interfaces/IController";
 import { Post } from "../../models/classes/routes/Post";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { Delete } from "../../models/classes/routes/Delete";

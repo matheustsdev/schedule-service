@@ -1,4 +1,4 @@
-import { IController } from "../../models/interfaces/Controller";
+import { IController } from "../../models/interfaces/IController";
 import { UserService } from "../user/user.service";
 import { Request, Response } from "express";
 import { AuthService } from "./auth.service";

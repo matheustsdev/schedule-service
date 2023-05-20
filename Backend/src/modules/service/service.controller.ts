@@ -6,7 +6,7 @@ import { Delete } from "../../models/classes/routes/Delete";
 import { Patch } from "../../models/classes/routes/Patch";
 
 import { Service } from "@prisma/client";
-import { IController } from "../../models/interfaces/Controller";
+import { IController } from "../../models/interfaces/IController";
 
 import { ICreateServiceDTO } from "./dtos/createService.dto";
 import { IUpdateServiceDTO } from "./dtos/updateService.dto";

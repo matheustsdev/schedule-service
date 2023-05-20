@@ -4,7 +4,7 @@ import { Get } from "../../models/classes/routes/Get";
 import { Post } from "../../models/classes/routes/Post";
 import { Delete } from "../../models/classes/routes/Delete";
 import { Patch } from "../../models/classes/routes/Patch";
-import { IController } from "../../models/interfaces/Controller";
+import { IController } from "../../models/interfaces/IController";
 import { ScheduleService } from "./schedule.service";
 import { ICreateScheduleDTO } from "./dtos/createSchedule.dto";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";

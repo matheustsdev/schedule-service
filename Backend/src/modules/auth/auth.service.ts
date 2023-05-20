@@ -3,8 +3,9 @@ import { IUserAuthDTO } from "./dtos/userAuth.dto";
 import { PrismaClient, User } from "@prisma/client";
 import { UserService } from "../user/user.service";
 import jwt from "jsonwebtoken";
+import { IService } from "../../models/interfaces/IService";
 
-export class AuthService {
+export class AuthService implements IService {
     private prisma = new PrismaClient()
     private userService = new UserService()
 

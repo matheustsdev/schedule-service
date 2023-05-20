@@ -1,9 +1,9 @@
 import { PrismaClient, Service } from "@prisma/client"
 import { ICreateServiceDTO } from "./dtos/createService.dto"
 import { IUpdateServiceDTO } from "./dtos/updateService.dto"
+import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD"
 
-export class ServiceService {
-
+export class ServiceService implements IServiceCRUD<Service, ICreateServiceDTO, IUpdateServiceDTO > {
     private prisma = new PrismaClient()
 
     async create(service: ICreateServiceDTO): Promise<Service>{
@@ -19,6 +19,10 @@ export class ServiceService {
         return {} as Service
     }
 
+    read(id: string): Promise<Service | null> {
+        throw new Error("Method not implemented.")
+    }
+
     async update(serviceId: string, data: IUpdateServiceDTO) {
         const updatedService = await this.prisma.service.update({
             where: {
@@ -28,6 +32,10 @@ export class ServiceService {
         })
 
         return updatedService
+    }
+
+    delete(id: string): Promise<Service> {
+        throw new Error("Method not implemented.")
     }
 
 }   

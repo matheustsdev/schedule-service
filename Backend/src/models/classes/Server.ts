@@ -1,6 +1,6 @@
 import express from "express"
 import { Route } from "./routes/Route";
-import { Controller } from "../interfaces/Controller";
+import { Controller } from "../interfaces/IController";
 
 export class Server{
 
