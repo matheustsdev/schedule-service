@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
-import { PrismaClien, Schedule } from "@prisma/client";
+import { Schedule } from "@prisma/client";
 import { Get } from "../../models/classes/routes/Get";
-import { Post } from "../../models/classes/routes/Post";
 import { Delete } from "../../models/classes/routes/Delete";
 import { Patch } from "../../models/classes/routes/Patch";
 import { IController } from "../../models/interfaces/Controller";
 import { ScheduleService } from "./schedule.service";
-import { ICreateScheduleDTO } from "./dtos/createSchedule.dto";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";
 import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
@@ -65,7 +63,7 @@ export class ScheduleController implements IController{
             if(!userId) 
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
                     code: EErrorCode.MISSING_QUERY,
-                    message: "Query 'usuário' não informada"
+                    message: "Query 'userId' não informada"
                 }))
 
             const schedule = await this.scheduleService.readWithUser(userId.toString())
@@ -76,7 +74,7 @@ export class ScheduleController implements IController{
                     message: "Agendamento não encontrado"
                 }))
 
-            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, schedule))
+            return response.json(new StandartResponse<Schedule[]>(EResponseStatus.SUCESS, schedule))
         })
     }
 
@@ -98,7 +96,7 @@ export class ScheduleController implements IController{
                     message: "Agendamento não encontrado"
                 }))
 
-            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, schedule))
+            return response.json(new StandartResponse<Schedule[]>(EResponseStatus.SUCESS, schedule))
         })
     }
 
