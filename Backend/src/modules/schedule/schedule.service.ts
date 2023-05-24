@@ -23,7 +23,7 @@ export class ScheduleService {
     async delete(scheduleId: string) {
         const deleteSchedule = await this.prisma.schedule.delete({
             where: {
-                scheduleId: scheduleId
+                schedule_id: scheduleId
             }
         })
         return deleteSchedule ? deleteSchedule : {
@@ -36,7 +36,7 @@ export class ScheduleService {
     async readWithUser(userId: string) {
         const schedule = await this.prisma.schedule.findMany({
             where: {
-                user_id_fk
+                user_id_fk: userId
             }
         })
 
@@ -46,7 +46,7 @@ export class ScheduleService {
     async readWithService(serviceId: string) {
         const schedule = await this.prisma.schedule.findMany({
             where: {
-                service_id_fk
+                service_id_fk: serviceId
             }
         })
 
