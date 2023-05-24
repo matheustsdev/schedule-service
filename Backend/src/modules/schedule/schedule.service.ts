@@ -33,4 +33,25 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
 
         return deleteSchedule;
     }
+
+
+    async readWithUser(userId: string) {
+        const schedule = await this.prisma.schedule.findMany({
+            where: {
+                user_id_fk: userId
+            }
+        })
+
+        return schedule
+    }
+
+    async readWithService(serviceId: string) {
+        const schedule = await this.prisma.schedule.findMany({
+            where: {
+                service_id_fk: serviceId
+            }
+        })
+
+        return schedule
+    }
 }
