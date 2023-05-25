@@ -36,10 +36,7 @@ export class ServiceService {
                 service_id: serviceId
             }
         })
-        return deleteService ? deleteService : {
-            error: "E02",
-            description: "Erro interno do servidor"
-        }
+        return deleteService 
     }
 
 }   
