@@ -10,7 +10,7 @@ export class AuthController implements IController {
     private authService: AuthService = new AuthService();
 
     private login() {
-        new Post("/user/auth", async (request: Request, response: Response) => {
+        new Post("/auth", async (request: Request, response: Response) => {
             const { email, password } = request.body as IUserAuthDTO;
                     
             if(!email || !password) 

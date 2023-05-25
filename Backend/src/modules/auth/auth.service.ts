@@ -9,9 +9,8 @@ import { IAuthResponseDTO } from "./dtos/authResponse.dto";
 
 export class AuthService implements IService {
     private prisma = new PrismaClient()
-    private userService = new UserService()
 
-    private milisecondsInterval = 7 * 24 * 60 * 60 * 1000; // 7 days
+    public milisecondsInterval = 7 * 24 * 60 * 60 * 1000; // 7 days
 
     private async checkPassword(user: User, triedPassword: string) {
 
@@ -32,7 +31,14 @@ export class AuthService implements IService {
     }
 
     async auth({email, password}: IUserAuthDTO) {
-        const user = await this.userService.readWithEmail(email);
+        const user = await this.prisma.user.findUnique({
+            where: {
+                email
+            },
+            include: {
+                AuthToken: true
+            }
+        })
 
         if(!user) 
             return undefined;

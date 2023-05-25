@@ -5,4 +5,5 @@ export enum EErrorCode {
     EMAIL_ALREADY_EXISTS = "E04",
     EMAIL_INCORRECT = "E05",
     DATA_NOT_FOUND = "E06",
+    DATA_ALREADY_EXISTS = "E07",
 }
