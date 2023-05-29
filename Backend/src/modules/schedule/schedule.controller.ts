@@ -8,6 +8,7 @@ import { IController } from "../../models/interfaces/IController";
 import { ScheduleService } from "./schedule.service";
 import { ICreateScheduleDTO } from "./dtos/createSchedule.dto";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";
+import { authorizationMiddleware } from "../../middlewares/authorization";
 
 export class ScheduleController implements IController{
     private scheduleService: ScheduleService = new ScheduleService();
@@ -34,7 +35,7 @@ export class ScheduleController implements IController{
                 description: "Não foi encontrado o schedule_id como query na requisição."
             })
 
-        })
+        }, authorizationMiddleware)
     }
     
     private async deleteSchedule(){
@@ -52,7 +53,7 @@ export class ScheduleController implements IController{
                 })
             }
 
-        })
+        }, authorizationMiddleware)
     }
 
     execute(){

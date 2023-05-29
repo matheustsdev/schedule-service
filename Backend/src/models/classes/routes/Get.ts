@@ -6,11 +6,14 @@ import { StandartResponse } from "../StandartResponse";
 export class Get<T> extends Route{
     constructor(
         path: string,
-        callback: (req: Request, res: Response, next: NextFunction) => Promise<Response<StandartResponse<T>, Record<string, any>>>
+        callback: (req: Request, res: Response, next: NextFunction) => Promise<Response<StandartResponse<T>, Record<string, any>>>,
+        middleware?: RequestHandler
         ) {
         super()
 
-        Route.route.get(path,callback)
+        const defaultMiddleware = (req: Request, res: Response, next: NextFunction) => next();
+
+        Route.route.get(path, middleware ?? defaultMiddleware, callback)
         Logger.send(`GET { ${path} } route initialized.`)
     }
     

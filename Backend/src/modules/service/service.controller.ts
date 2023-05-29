@@ -12,6 +12,7 @@ import { ICreateServiceDTO } from "./dtos/createService.dto";
 import { IUpdateServiceDTO } from "./dtos/updateService.dto";
 
 import { ServiceService } from "./service.service";
+import { authorizationMiddleware } from "../../middlewares/authorization";
 
 export class ServiceController implements IController {
 
@@ -29,7 +30,7 @@ export class ServiceController implements IController {
             })
 
             return response.json(createService)
-        })
+        }, authorizationMiddleware)
     }
 
     private async updateService() {
@@ -47,7 +48,7 @@ export class ServiceController implements IController {
                 description: "Não foi encontrado o user_id como query na requisição."
             })
 
-        })
+        }, authorizationMiddleware)
     }
 
 
