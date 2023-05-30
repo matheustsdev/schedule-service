@@ -1,14 +1,14 @@
 import { compare } from "bcrypt";
 import { IUserAuthDTO } from "./dtos/userAuth.dto";
-import { PrismaClient, User } from "@prisma/client";
-import { UserService } from "../user/user.service";
+import {  User } from "@prisma/client";
 import { hash } from "bcrypt"
 import jwt from "jsonwebtoken";
 import { IService } from "../../models/interfaces/IService";
 import { IAuthResponseDTO } from "./dtos/authResponse.dto";
+import { Prisma } from "../../models/classes/Prisma";
 
 export class AuthService implements IService {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.client
 
     public milisecondsInterval = 7 * 24 * 60 * 60 * 1000; // 7 days
 

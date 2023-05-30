@@ -1,10 +1,11 @@
-import { PrismaClient, Schedule } from "@prisma/client"
+import { Schedule } from "@prisma/client"
 import { ICreateScheduleDTO } from "./dtos/createSchedule.dto"
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto"
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD"
+import { Prisma } from "../../models/classes/Prisma"
 
 export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDTO, IUpdateScheduleDTO> {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.client
 
     create(createDTO: ICreateScheduleDTO): Promise<Schedule> {
         throw new Error("Method not implemented.")

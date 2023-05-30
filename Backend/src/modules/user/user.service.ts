@@ -1,12 +1,13 @@
-import { AuthToken, PrismaClient, User } from "@prisma/client";
+import { AuthToken, User } from "@prisma/client";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
 import { AuthService } from "../auth/auth.service";
 import { hash } from "bcrypt";
+import { Prisma } from "../../models/classes/Prisma";
 
 export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUserDTO> {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.client
     private authService = new AuthService()
 
     async create(user: ICreateUserDTO): Promise<User | null> {
