@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { Get } from "../../models/classes/routes/Get";
-import { Post } from "../../models/classes/routes/Post";
-import { Delete } from "../../models/classes/routes/Delete";
-import { Patch } from "../../models/classes/routes/Patch";
+import { Get } from "../../models/classes/methods/Get";
+import { Post } from "../../models/classes/methods/Post";
+import { Delete } from "../../models/classes/methods/Delete";
+import { Patch } from "../../models/classes/methods/Patch";
 
 import { Service } from "@prisma/client";
 import { IController } from "../../models/interfaces/IController";

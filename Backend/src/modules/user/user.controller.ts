@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { Get } from "../../models/classes/routes/Get";
+import { Get } from "../../models/classes/methods/Get";
 import { UserService } from "./user.service";
 import { User } from "@prisma/client";
 import { IController } from "../../models/interfaces/IController";
-import { Post } from "../../models/classes/routes/Post";
+import { Post } from "../../models/classes/methods/Post";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
-import { Delete } from "../../models/classes/routes/Delete";
+import { Delete } from "../../models/classes/methods/Delete";
 import { authorizationMiddleware } from "../../middlewares/authorization";
 
 import { genSalt, hash } from "bcrypt"
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
-import { Patch } from "../../models/classes/routes/Patch";
+import { Patch } from "../../models/classes/methods/Patch";
 import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
 import { EErrorCode } from "../../models/enums/EErrorCode";

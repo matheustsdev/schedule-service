@@ -3,7 +3,7 @@ import { UserService } from "../user/user.service";
 import { Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import { IUserAuthDTO } from "./dtos/userAuth.dto";
-import { Post } from "../../models/classes/routes/Post";
+import { Post } from "../../models/classes/methods/Post";
 
 export class AuthController implements IController {
     private userService: UserService = new UserService();

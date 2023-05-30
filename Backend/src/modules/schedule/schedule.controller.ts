@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Schedule } from "@prisma/client";
-import { Get } from "../../models/classes/routes/Get";
-import { Delete } from "../../models/classes/routes/Delete";
-import { Patch } from "../../models/classes/routes/Patch";
+import { Get } from "../../models/classes/methods/Get";
+import { Delete } from "../../models/classes/methods/Delete";
+import { Patch } from "../../models/classes/methods/Patch";
 import { IController } from "../../models/interfaces/IController";
 import { ScheduleService } from "./schedule.service";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";

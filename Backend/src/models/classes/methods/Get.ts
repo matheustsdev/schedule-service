@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response,  } from "express";
-import { Route } from "./Route";
+import { Route } from "../Route";
 import { Logger } from "../Logger";
 import { StandartResponse } from "../StandartResponse";
 
