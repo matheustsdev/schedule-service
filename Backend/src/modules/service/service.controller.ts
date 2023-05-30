@@ -60,7 +60,7 @@ export class ServiceController implements IController {
             if(!serviceId)
                 return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service,{
                     code: EErrorCode.MISSING_QUERY,
-                    message: "Query 'serviceID' não informada"
+                    message: "Query 'serviceID' não informada."
                 }))
 
             const deletedService = await this.serviceService.delete(serviceId.toString()) 
@@ -68,7 +68,7 @@ export class ServiceController implements IController {
             if(!deletedService)
                 return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service,{
                     code: EErrorCode.DATA_NOT_FOUND,
-                    message: "Serviço não encontrado"
+                    message: "Serviço não encontrado."
                 }))
             
             return response.json(deletedService)
