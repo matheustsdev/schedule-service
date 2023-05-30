@@ -6,6 +6,7 @@ import { Patch } from "../../models/classes/routes/Patch";
 import { IController } from "../../models/interfaces/IController";
 import { ScheduleService } from "./schedule.service";
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto";
+import { authorizationMiddleware } from "../../middlewares/authorization";
 import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
 import { EErrorCode } from "../../models/enums/EErrorCode";
@@ -35,7 +36,7 @@ export class ScheduleController implements IController{
                 description: "Não foi encontrado o schedule_id como query na requisição."
             })
 
-        })
+        }, authorizationMiddleware)
     }
     
     private async deleteSchedule(){
@@ -53,7 +54,7 @@ export class ScheduleController implements IController{
                 })
             }
 
-        })
+        }, authorizationMiddleware)
     }
 
     private async getScheduleByUser() {

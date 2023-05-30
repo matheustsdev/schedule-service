@@ -6,6 +6,7 @@ import { IController } from "../../models/interfaces/IController";
 import { Post } from "../../models/classes/routes/Post";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { Delete } from "../../models/classes/routes/Delete";
+import { authorizationMiddleware } from "../../middlewares/authorization";
 
 import { genSalt, hash } from "bcrypt"
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
@@ -23,7 +24,7 @@ export class UserController implements IController {
             
             if(!userId) 
                 return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'userId' não informada"
                 }))
 
@@ -36,7 +37,7 @@ export class UserController implements IController {
                 }))
 
             return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, user))
-        })
+        }, authorizationMiddleware)
     }
 
     private async getUserByEmail() {
@@ -45,7 +46,7 @@ export class UserController implements IController {
         
             if(!email) 
                 return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'email' não informada"
                 }))
 
@@ -58,11 +59,12 @@ export class UserController implements IController {
                 }))
 
             return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, user))
-        })
+        }, authorizationMiddleware)
     }
 
     private async createUser() {
         new Post<User>("/user/create", async (request: Request, response: Response) => {
+            console.log("Create user controller called")
             const { email, password, name, phone, role } = request.body as ICreateUserDTO
 
             const createdSalt = await genSalt(4)
@@ -77,17 +79,23 @@ export class UserController implements IController {
                 role: role
             })
 
+            if(!createdUser)
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.DATA_ALREADY_EXISTS,
+                    message: "Usuário já existe."
+                }))
+
             return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, createdUser))
         })
     }
 
     private async deleteUser() {
-        new Delete("/user/delete", async (request: Request, response: Response) => {
+        new Delete("/user/delete", async (request: Request, response: Response, authorizationMiddleware) => {
             const { userId } = request.query
 
             if(!userId) 
                 return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'userId' não informada"
                 }))
             
@@ -103,7 +111,7 @@ export class UserController implements IController {
 
             return response.json(deletedUser)
 
-        })
+        }, authorizationMiddleware)
     }
 
     private async updateUser() {
@@ -113,7 +121,7 @@ export class UserController implements IController {
 
             if(!userId) 
                 return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'userId' não informada"
                 }))
 
@@ -126,7 +134,7 @@ export class UserController implements IController {
                 }))
 
             return response.json(updatedUser)
-        })
+        }, authorizationMiddleware)
     }
 
     execute() {

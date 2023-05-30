@@ -1,17 +1,37 @@
-import { PrismaClient, User } from "@prisma/client";
+import { AuthToken, PrismaClient, User } from "@prisma/client";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
+import { AuthService } from "../auth/auth.service";
+import { hash } from "bcrypt";
 
 export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUserDTO> {
     private prisma = new PrismaClient()
+    private authService = new AuthService()
 
-    async create(user: ICreateUserDTO): Promise<User> {
-        const createdUser = await this.prisma.user.create({
-            data: user
-        })
+    async create(user: ICreateUserDTO): Promise<User | null> {
+        try {
+            const test = await this.readWithEmail(user.email)
 
-        return createdUser;
+            if(!!test) return null;
+
+            const createdUser = await this.prisma.user.create({
+                data: {
+                    ...user,
+                    AuthToken: {
+                        create: {
+                            token: await hash(user.email, new Date().getTime()),
+                            expiration_date: new Date(Date.now() + this.authService.milisecondsInterval)
+                        }
+                    }
+                }
+            });
+        
+            return createdUser;
+        } catch (error) {
+            return null;
+        }
+        
     }
 
     async read(userId: string): Promise<User | null> {
@@ -45,10 +65,13 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
         return deletedUser;
     }
  
-    async readWithEmail(email: string): Promise<User | null> {
+    async readWithEmail(email: string): Promise<User & {AuthToken: AuthToken[]} | null> {
         const user = await this.prisma.user.findUnique({
             where: {
                 email
+            },
+            include: {
+                AuthToken: true
             }
         })
 
