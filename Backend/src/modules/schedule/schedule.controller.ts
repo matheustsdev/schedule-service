@@ -59,12 +59,14 @@ export class ScheduleController implements IController{
 
     private async createSchedule() {
         new Post<Schedule>("/schedule/create", async (request: Request, response: Response) => {
-            const { startTime, endTime, description } = request.body as ICreateScheduleDTO
+            const { start_time, end_time, description, user_id_fk, service_id_fk } = request.body as ICreateScheduleDTO
 
             const createdSchedule = await this.scheduleService.create({
-                startTime: startTime,
-                endTime: endTime,
-                description: description
+                start_time: start_time,
+                end_time: end_time,
+                description: description,
+                user_id_fk: user_id_fk,
+                service_id_fk: service_id_fk
             })
 
             return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, createdSchedule))
@@ -74,7 +76,7 @@ export class ScheduleController implements IController{
     execute(){
         this.deleteSchedule(),
         this.updateSchedule()
-       // this.createSchedule()
+        this.createSchedule()
     }
 
 } 

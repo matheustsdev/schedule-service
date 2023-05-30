@@ -32,19 +32,17 @@ export class ScheduleService {
         }
     }
 
-    async create(schedule: ICreateScheduleDTO): Promise<Schedule> {
+    async create(schedule: ICreateScheduleDTO): Promise<Schedule>{
         try {
-            const createdSchedule = await this.prisma.schedule.create({
+            const createSchedule = await this.prisma.schedule.create({
                 data: schedule
             })
-
-            return createdSchedule
-        } catch(e) {
-            console.log(e)
+            return createSchedule
+        
+        }catch(ex) {
+            console.log(ex)
         }
-
         return {} as Schedule
-
     }
 }
     
