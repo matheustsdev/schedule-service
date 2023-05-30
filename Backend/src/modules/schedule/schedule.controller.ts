@@ -63,7 +63,7 @@ export class ScheduleController implements IController{
         
             if(!userId) 
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'userId' não informada"
                 }))
 
@@ -85,7 +85,7 @@ export class ScheduleController implements IController{
         
             if(!serviceId) 
                 return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'serviceId' não informada"
                 }))
 
