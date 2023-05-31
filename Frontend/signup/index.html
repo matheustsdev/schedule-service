@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <main class="container">
+        <img class="logo"src="./img/Logo_maior.png">
+        <h1>Cadastro</h1>
+        <form action="" method="POST"> 
+            <div class="form__item">
+                <label for="name">Nome:</label>
+                <input type="text" requerid
+                id="name" name="user_name" class="register__container" 
+                placeholder="Digite seu nome"
+                maxlength="40">
+            </div>
+            <div class="form__item">
+                <label for="telefone">Telefone:</label>
+                <input type="tel"
+                id="telefone" name="user_phone" class="register__container"
+                placeholder="(xxx) xxxxx-xxxx"  maxlength="14">
+            </div>
+            <div class="form__item">
+                <label for="email">E-mail:</label>
+                <input type="email"  requerid
+                id="email" name="user_email" class="register__container"  
+                placeholder="Digite seu e-mail" 
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+            </div>
+            <div class="form__item">
+                <label for="senha">Senha:</label>
+                <input type="password" requerid
+                id="senha" name="user_password" class="register__container"
+                placeholder="Digite sua senha"
+                pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="A senha deve conter no mínimo um número, um caractere minúsculo e maiúsculo, e no mínimo 8 caracteres no total">
+            </div>
+            <div class="form__item">
+                <label for="confirmar_senha">Confirmar Senha:</label>
+                <input type="password" requerid
+                id="confirmar_senha" name="user_confirm_password" class="register__container"
+                placeholder="Confirme sua senha">
+            </div>
+            <div class="form__item">
+                <input type="submit" requerid
+                id="submit" name="sign_up_submit" class="register__container"
+                value="Cadastrar">
+            </div>
+        </form>
+        <a class="login__link" href="#">Já possui uma conta?</a>
+    </main>
+</body>
+</html>
