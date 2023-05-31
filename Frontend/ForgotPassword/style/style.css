@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+@import url('./ForgotPassword.css');
+
+body {
+
+    background-color: #FFFFFF;
+    font-family: 'PT Serif', serif;
+    color: #6b7459;
+    font-size: 16px;
+    font-weight: 400;
+    min-width: 15.6rem;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+main {
+    background-color: #f5f6f9;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 7rem 2rem;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+h1 {
+    font-size: 2.25rem;
+    padding-bottom: 3rem;
+    font-weight: 700;
+
+}
+
+input {
+    color: #6b7459;
+    font-weight: 400;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    padding: 0.6rem;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 1rem;
+
+}
+
+label {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 0.5rem 0.3rem;
+    font-size: 13px;
+    font-family: 'Source Sans Pro';
+    font-weight: 600;
+
+}
+
+input::placeholder {
+
+    color: #6b7459;
+    font-family: 'Source Sans Pro';
+
+}
+
+input:hover {
+
+    outline: 1px solid #6b7459;
+
+}
+
+form input[type="submit"] {
+    
+    background-color: #6b7459;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 3rem;
+    
+}
+
+form input[type="submit"]:hover {
+
+    background-color: #2e4a11;
+    letter-spacing: 0.5px;
+    border-color: #6b7459;
+
+}
