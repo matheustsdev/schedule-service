@@ -2,60 +2,43 @@
 @import url('./ForgotPassword.css');
 
 body {
-
     background-color: #FFFFFF;
     font-family: 'PT Serif', serif;
     color: #6b7459;
-    font-size: 16px;
-    font-weight: 400;
-    min-width: 15.6rem;
     min-height: 100vh;
 
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-
 }
 
 main {
-    background-color: #f5f6f9;
-    text-align: center;
-    border-radius: 15px;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-    padding: 7rem 2rem;
-
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     
+    background-color: #f5f6f9;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 5rem 4rem;
 }
 
 h1 {
     font-size: 2.25rem;
     padding-bottom: 3rem;
     font-weight: 700;
-
 }
 
-input {
-    color: #6b7459;
-    font-weight: 400;
-    border: 1px solid #FFFFFF;
-    border-radius: 10px;
-    padding: 0.6rem;
-    box-shadow: 1px 1px 6px #0000001c;
-    outline: none;
 
-}
 
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     padding-top: 1rem;
-
 }
 
 label {
@@ -65,36 +48,48 @@ label {
     font-size: 13px;
     font-family: 'Source Sans Pro';
     font-weight: 600;
-
+    align-self: flex-start;
 }
 
 input::placeholder {
-
     color: #6b7459;
     font-family: 'Source Sans Pro';
-
 }
 
 input:hover {
-
     outline: 1px solid #6b7459;
-
 }
 
-form input[type="submit"] {
+
+input {
+    padding: 0.6rem 0 0.6rem 0.6rem;
+    outline: none;
+    box-shadow: 1px 1px 6px #0000001c;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    width: 100%;
     
+    color: #6b7459;
+}
+
+form button[type="submit"] {
     background-color: #6b7459;
     color: #FFFFFF;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 3rem;
     
+    padding: 1rem 2rem;
+    outline: none;
+    box-shadow: 1px 1px 6px #0000001c;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    
+    max-width: 75%;
 }
 
-form input[type="submit"]:hover {
-
+form button[type="submit"]:hover {
     background-color: #2e4a11;
     letter-spacing: 0.5px;
     border-color: #6b7459;
-
 }
