@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { Get } from "../../models/classes/routes/Get";
-import { Post } from "../../models/classes/routes/Post";
-import { Delete } from "../../models/classes/routes/Delete";
-import { Patch } from "../../models/classes/routes/Patch";
+import { Get } from "../../models/classes/methods/Get";
+import { Post } from "../../models/classes/methods/Post";
+import { Delete } from "../../models/classes/methods/Delete";
+import { Patch } from "../../models/classes/methods/Patch";
 
 import { Service } from "@prisma/client";
-import { IController } from "../../models/interfaces/Controller";
+import { IController } from "../../models/interfaces/IController";
 
 import { ICreateServiceDTO } from "./dtos/createService.dto";
 import { IUpdateServiceDTO } from "./dtos/updateService.dto";
@@ -15,6 +15,7 @@ import { ServiceService } from "./service.service";
 import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
 import { EErrorCode } from "../../models/enums/EErrorCode";
+import { authorizationMiddleware } from "../../middlewares/authorization";
 
 export class ServiceController implements IController {
 
@@ -32,7 +33,7 @@ export class ServiceController implements IController {
             })
 
             return response.json(createService)
-        })
+        }, authorizationMiddleware)
     }
 
     private async updateService() {
@@ -50,7 +51,7 @@ export class ServiceController implements IController {
                 description: "Não foi encontrado o user_id como query na requisição."
             })
 
-        })
+        }, authorizationMiddleware)
     }
 
     private async deleteService(){
