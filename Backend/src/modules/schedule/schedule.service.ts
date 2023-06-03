@@ -31,20 +31,5 @@ export class ScheduleService {
             description: "Erro interno do servidor"
         }
     }
-
-    async create(schedule: ICreateScheduleDTO): Promise<Schedule> {
-        try {
-            const createdSchedule = await this.prisma.schedule.create({
-                data: schedule
-            })
-
-            return createdSchedule
-        } catch(e) {
-            console.log(e)
-        }
-
-        return {} as Schedule
-
-    }
 }
     

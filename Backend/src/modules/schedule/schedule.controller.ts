@@ -57,24 +57,9 @@ export class ScheduleController implements IController{
         })
     }
 
-    private async createSchedule() {
-        new Post<Schedule>("/schedule/create", async (request: Request, response: Response) => {
-            const { startTime, endTime, description } = request.body as ICreateScheduleDTO
-
-            const createdSchedule = await this.scheduleService.create({
-                startTime: startTime,
-                endTime: endTime,
-                description: description
-            })
-
-            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, createdSchedule))
-        })
-      }
-
     execute(){
         this.deleteSchedule(),
         this.updateSchedule()
-       // this.createSchedule()
     }
 
 } 
