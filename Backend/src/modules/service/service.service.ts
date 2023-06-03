@@ -34,8 +34,13 @@ export class ServiceService implements IServiceCRUD<Service, ICreateServiceDTO, 
         return updatedService
     }
 
-    delete(id: string): Promise<Service> {
-        throw new Error("Method not implemented.")
+    async delete(serviceId: string) {
+        const deleteService = await this.prisma.service.delete({
+            where: {
+                service_id: serviceId
+            }
+        })
+        return deleteService 
     }
 
 }   

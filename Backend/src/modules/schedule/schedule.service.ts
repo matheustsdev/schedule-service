@@ -56,3 +56,4 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
         return schedule
     }
 }
+    

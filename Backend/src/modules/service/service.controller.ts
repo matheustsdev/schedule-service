@@ -12,6 +12,9 @@ import { ICreateServiceDTO } from "./dtos/createService.dto";
 import { IUpdateServiceDTO } from "./dtos/updateService.dto";
 
 import { ServiceService } from "./service.service";
+import { StandartResponse } from "../../models/classes/StandartResponse";
+import { EResponseStatus } from "../../models/enums/EResponseStatus";
+import { EErrorCode } from "../../models/enums/EErrorCode";
 import { authorizationMiddleware } from "../../middlewares/authorization";
 
 export class ServiceController implements IController {
@@ -51,11 +54,33 @@ export class ServiceController implements IController {
         }, authorizationMiddleware)
     }
 
+    private async deleteService(){
+        new Delete("/service/delete", async (request: Request, response: Response) => {
+            const { serviceId } = request.query
 
+            if(!serviceId)
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service,{
+                    code: EErrorCode.MISSING_QUERY,
+                    message: "Query 'serviceID' não informada."
+                }))
+
+            const deletedService = await this.serviceService.delete(serviceId.toString()) 
+
+            if(!deletedService)
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service,{
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Serviço não encontrado."
+                }))
+            
+            return response.json(deletedService)
+
+        })
+    }
 
 
     execute() {
         this.createService()
         this.updateService()
+        this.deleteService()
     }
 }
