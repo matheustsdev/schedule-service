@@ -35,6 +35,18 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
         return deleteSchedule;
     }
 
+    async create(schedule: ICreateScheduleDTO): Promise<Schedule>{
+        try {
+            const createSchedule = await this.prisma.schedule.create({
+                data: schedule
+            })
+            return createSchedule
+        
+        }catch(ex) {
+            console.log(ex)
+        }
+        return {} as Schedule
+    }
 
     async readWithUser(userId: string) {
         const schedule = await this.prisma.schedule.findMany({

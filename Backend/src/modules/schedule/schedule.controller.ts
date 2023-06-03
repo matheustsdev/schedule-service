@@ -79,6 +79,29 @@ export class ScheduleController implements IController{
         })
     }
 
+    private async createSchedule() {
+        new Post<Schedule>("/schedule/create", async (request: Request, response: Response) => {
+            const { start_time, end_time, description, user_id_fk, service_id_fk } = request.body as ICreateScheduleDTO
+
+            const createdSchedule = await this.scheduleService.create({
+                start_time: start_time,
+                end_time: end_time,
+                description: description,
+                user_id_fk: user_id_fk,
+                service_id_fk: service_id_fk
+            })
+            
+            if(!createdSchedule) {
+              return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Não foi possível criar o agendamento."
+                }))
+            }
+            
+            return response.json(new StandartResponse<Schedule[]>(EResponseStatus.SUCESS, createdSchedule))
+        })
+    }
+
     private async getScheduleByService() {
         new Get<Schedule>("/schedule/service", async (request: Request, response: Response) => {
             const { serviceId } = request.query       
@@ -103,6 +126,7 @@ export class ScheduleController implements IController{
 
     execute(){
         this.deleteSchedule(),
+        this.createSchedule()
         this.updateSchedule(),
         this.getScheduleByUser(),
         this.getScheduleByService()
