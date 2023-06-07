@@ -17,21 +17,22 @@ body {
     color: var(--green);
     font-size: 16px;
     font-weight: 400;
-    min-width: 15.6rem;
-    min-height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+    min-width: 16rem;
+    min-height: 100vh;
+    max-width: 24rem;
+    margin: 0 auto;
+
+    width: 100%;
 
 }
 main {
     
+    /* troquei border-radius de 15px pra 25*/
     background-color: var(--darker-white);
     text-align: center;
     padding: 1.5rem 2rem;
-    border-radius: 15px;
+    border-radius: 25px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 
     display: flex;
@@ -42,7 +43,6 @@ main {
 }
 h1 {
 
-    font-size: 1.75rem;
     padding: 2rem;
     font-size: 2.25rem;
     font-weight: 700;
@@ -53,7 +53,7 @@ form {
     width: 100%;
     
 }
-form div {
+.form__item {
 
     display: flex;
     justify-content: center;
@@ -122,8 +122,6 @@ form input[type="submit"]:hover {
     color: var(--button-hover);
     
 }
-
-
 .logo {
 
     width: 70px;
