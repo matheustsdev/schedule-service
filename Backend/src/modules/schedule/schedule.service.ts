@@ -32,16 +32,11 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
     }
 
     async create(schedule: ICreateScheduleDTO): Promise<Schedule>{
-        try {
-            const createSchedule = await this.prisma.schedule.create({
-                data: schedule
-            })
-            return createSchedule
-        
-        }catch(ex) {
-            console.log(ex)
-        }
-        return {} as Schedule
+        const createSchedule = await this.prisma.schedule.create({
+            data: schedule
+        })
+
+        return createSchedule
     }
 
     async readWithUser(userId: string) {

@@ -1,22 +1,18 @@
-import { PrismaClient, Service } from "@prisma/client"
+import { Service } from "@prisma/client"
 import { ICreateServiceDTO } from "./dtos/createService.dto"
 import { IUpdateServiceDTO } from "./dtos/updateService.dto"
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD"
+import { Prisma } from "../../models/classes/Prisma"
 
 export class ServiceService implements IServiceCRUD<Service, ICreateServiceDTO, IUpdateServiceDTO > {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.client
 
     async create(service: ICreateServiceDTO): Promise<Service>{
-        try {
-            const createService = await this.prisma.service.create({
-                data: service
-            })
-            return createService
-        
-        }catch(ex) {
-            console.log(ex)
-        }
-        return {} as Service
+        const createService = await this.prisma.service.create({
+            data: service
+        })
+
+        return createService
     }
 
     read(id: string): Promise<Service | null> {
@@ -40,6 +36,7 @@ export class ServiceService implements IServiceCRUD<Service, ICreateServiceDTO, 
                 service_id: serviceId
             }
         })
+
         return deleteService 
     }
 

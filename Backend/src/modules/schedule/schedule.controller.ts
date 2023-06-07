@@ -45,16 +45,24 @@ export class ScheduleController implements IController{
         new Delete("/schedule/delete", async (request: Request, response: Response) => {
             const { scheduleId } = request.query
 
-            if (scheduleId) {
-                const deleteSchedule = await this.scheduleService.delete(scheduleId.toString())
-
-                return response.json(deleteSchedule)
-            } else {
-                return response.status(404).json({
-                    error: "E01",
-                    description: "Não foi encontrado o schedule_id como query na requisição."
-                })
+            if (!scheduleId) {
+                return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.MISSING_QUERY_DATA,
+                    message: "Query 'scheduleId' não informada"
+                }))
+                
             }
+
+            const deleteSchedule = await this.scheduleService.delete(scheduleId.toString())
+
+            if(!deleteSchedule) {
+                return response.json(new StandartResponse<Schedule>(EResponseStatus.ERROR, {} as Schedule, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Não foi possível deletar o agendamento."
+                }))
+            }
+
+            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, deleteSchedule))
 
         }, authorizationMiddleware)
     }

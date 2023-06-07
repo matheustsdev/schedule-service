@@ -32,6 +32,13 @@ export class ServiceController implements IController {
                 time: time,
             })
 
+            if(!createService) {
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.INTERNAL_SERVER_ERROR,
+                    message: "Falha ao criar o serviço."
+                }))
+            }
+
             return response.json(createService)
         }, authorizationMiddleware)
     }
@@ -60,7 +67,7 @@ export class ServiceController implements IController {
 
             if(!serviceId)
                 return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service,{
-                    code: EErrorCode.MISSING_QUERY,
+                    code: EErrorCode.MISSING_QUERY_DATA,
                     message: "Query 'serviceID' não informada."
                 }))
 
@@ -76,7 +83,6 @@ export class ServiceController implements IController {
 
         })
     }
-
 
     execute() {
         this.createService()
