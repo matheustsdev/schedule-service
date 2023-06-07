@@ -14,9 +14,12 @@ import { Patch } from "../../models/classes/methods/Patch";
 import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
 import { EErrorCode } from "../../models/enums/EErrorCode";
+import { uuid } from "uuidv4";
+import { Mailer } from "../../models/classes/Mailer";
 
 export class UserController implements IController {
     private userService: UserService = new UserService();
+    private mailerService: Mailer = new Mailer();
 
     private async getUser() {
         new Get<User>("/user", async (request, response) => {
@@ -137,11 +140,69 @@ export class UserController implements IController {
         }, authorizationMiddleware)
     }
 
+    private async forgotPassword() {
+        new Post<boolean>("/user/forgotPassword", async (request: Request, response: Response) => {
+            const { email } = request.body
+
+            const user = await this.userService.readWithEmail(email)
+
+            if(!user)
+                return response.json(new StandartResponse<User>(EResponseStatus.ERROR, {} as User, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Usuário não encontrado"
+                }))
+
+           const newPassword = uuid().slice(0,6)
+
+           const mailMessage = `
+           <body>
+                <main>
+                    <h1>Sua nova senha</h1>
+                    <p> Sua senha foi atualizada! Agora você pode acessar sua conta usando a senha:</p>
+                    <h2>${newPassword}</h2>
+                    <p> Não esqueça de alterar sua senha após o login.</p>
+                    <br/>
+                    <p>Se você não solicitou a alteração de senha, entre em contato com o suporte.</p>
+                </main>
+           </body>
+           `
+
+           const mailerResponse = await this.mailerService.sendMail(
+            user.email,
+            "Atualização de senha",
+            mailMessage
+           )
+           console.log(mailerResponse)
+           
+           if(!mailerResponse) {
+                return response.json(new StandartResponse<boolean>(EResponseStatus.ERROR, false, {
+                    code: EErrorCode.INTERNAL_SERVER_ERROR,
+                    message: "Falha ao enviar email."
+                }))
+           }
+
+           const encryptedPassword = await hash(newPassword, user.salt)
+
+           const updatedUser = await this.userService.update(user.user_id, {
+                password: encryptedPassword
+           })
+           
+           if(!updatedUser)
+                return response.json(new StandartResponse<boolean>(EResponseStatus.ERROR, false, {
+                    code: EErrorCode.INTERNAL_SERVER_ERROR,
+                    message: "Falha ao criar nova senha."
+                }))
+
+           return response.json(new StandartResponse<boolean>(EResponseStatus.SUCESS, true))
+        })
+    }
+
     execute() {
         this.getUser()
         this.createUser()
         this.deleteUser()
         this.updateUser()
         this.getUserByEmail()
+        this.forgotPassword()
     }
 }
