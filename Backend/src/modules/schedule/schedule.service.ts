@@ -7,10 +7,6 @@ import { Prisma } from "../../models/classes/Prisma"
 export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDTO, IUpdateScheduleDTO> {
     private prisma = Prisma.client
 
-    create(createDTO: ICreateScheduleDTO): Promise<Schedule> {
-        throw new Error("Method not implemented.")
-    }
-
     read(id: string): Promise<Schedule | null> {
         throw new Error("Method not implemented.")
     }

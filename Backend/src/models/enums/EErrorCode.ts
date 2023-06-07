@@ -8,4 +8,5 @@ export enum EErrorCode {
     DATA_ALREADY_EXISTS = "E07",
     MISSING_HEADER_DATA = "E08",
     AUTHORIZATION_ERROR = "E09",
+    INTERNAL_SERVER_ERROR = "E10",
 }

@@ -10,6 +10,8 @@ import { authorizationMiddleware } from "../../middlewares/authorization";
 import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
 import { EErrorCode } from "../../models/enums/EErrorCode";
+import { Post } from "../../models/classes/methods/Post";
+import { ICreateScheduleDTO } from "./dtos/createSchedule.dto";
 
 export class ScheduleController implements IController{
     private scheduleService: ScheduleService = new ScheduleService();
@@ -98,7 +100,7 @@ export class ScheduleController implements IController{
                 }))
             }
             
-            return response.json(new StandartResponse<Schedule[]>(EResponseStatus.SUCESS, createdSchedule))
+            return response.json(new StandartResponse<Schedule>(EResponseStatus.SUCESS, createdSchedule))
         })
     }
 
