@@ -1,16 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
 
-:root {
-
-    --white: #FFFFFF;
-    --green: #6b7459;
-    --main-font: 'Source Sans Pro';
-    --title--font: 'PT Serif', serif;
-    --button-hover: #2e4a11;   /*  */
-    --darker-white: #f5f6f9;
-
-}
-
 body {
     background-color: var(--white);
     font-family: var(--title--font);

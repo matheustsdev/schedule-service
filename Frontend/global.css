@@ -1,0 +1,28 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+:root {
+
+    --white: #FFFFFF;
+    --green: #6b7459;
+    --main-font: 'Source Sans Pro';
+    --title--font: 'PT Serif', serif;
+    --button-hover: #2e4a11;   /*  */
+    --darker-white: #f5f6f9;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 75%;
+	}
+}
+
