@@ -14,7 +14,7 @@
     box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 900px) {
 	html {
 		font-size: 75%;
 	}
