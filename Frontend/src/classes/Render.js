@@ -29,14 +29,42 @@ export class Render {
         return innerScript
     }
 
-    static inner(element, html) {
-        const htmlContent = this.getOnlyBody(html)
+    static async header() {
+
+        // Header html text
+        const headerText = await fetch("/Frontend/src/components/header/index.html").then(res => res.text())
+
+        // Nav html text
+        const navStart = String(headerText).search(/<nav id="header">/g)
+        const navEnd = String(headerText).search(/<\/nav>/g)
+
+        const nav = String(headerText).slice(navStart, navEnd+6)
+
+        // Style html text
+        const styleStart = String(headerText).search(/<link rel="stylesheet"/g)
+        const styleEnd = String(headerText).search(/.css">/g)
+        
+        const style = String(headerText).slice(styleStart, styleEnd+6)
+        
+        // Elements query
+        const headerElement = document.querySelector("header")
+        const headElement = document.querySelector("head")
+
+        // HTML injection
+        this.append(headElement, style)
+        this.inner(headerElement, nav)
+    }
+
+    static head (html) {
         const head = document.querySelector("head")
 
         const headContent = this.getOnlyHead(html)
 
         head.innerHTML = headContent;
-        element.innerHTML = htmlContent;
+    }
+
+    static inner(element, html) {
+        element.innerHTML = html;
     }
 
     static addScriptTag(element, html) {
@@ -46,11 +74,9 @@ export class Render {
     }
         
     static append(element, html) {
-        const htmlContent = this.getOnlyBody(html)
+        console.log(html)
 
-        console.log(htmlContent)
-
-        element.innerHTML += htmlContent;
+        element.innerHTML += html;
     }
 
     static prepend(element, html) {
