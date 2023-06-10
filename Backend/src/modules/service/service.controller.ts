@@ -69,9 +69,32 @@ export class ServiceController implements IController {
     }
 
 
+    private async getServiceByUser() {
+        new Get<Service>("/service/user", async (request: Request, response: Response) => {
+            const { userId } = request.query       
+        
+            if(!userId) 
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.MISSING_QUERY_DATA,
+                    message: "Query 'serviceId' não informada"
+                }))
+
+            const service = await this.serviceService.readWithUser(userId.toString())
+
+            if(!service)
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Serviço não encontrado"
+                }))
+
+            return response.json(new StandartResponse<Service[]>(EResponseStatus.SUCESS, service))
+        })
+    }
+
     execute() {
         this.createService()
         this.updateService()
         this.deleteService()
+        this.getServiceByUser()
     }
 }
