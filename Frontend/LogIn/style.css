@@ -151,6 +151,19 @@ form button[type="submit"]:hover {
     border-color: #6b7459;
 }
 
+.signup__link {
+
+    color: var(--green);
+    text-decoration: none;
+    font-size: 0.8rem;
+
+}
+.signup__link:hover {
+
+    color: var(--button-hover);
+    
+}
+
 .logo {
 
     width: 70px;
