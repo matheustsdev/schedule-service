@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 body {
     background-color: var(--white);
-    font-family: var(--title--font);
+    font-family: var(--main-font);
     color: var(--green);
 
     height: 100vh;
@@ -31,11 +38,12 @@ main {
 }
 
 h1 {
-    padding-bottom: 4rem;
+    font-family: var(--title-font);
+    padding-bottom: 2.5rem;
     font-size: 2.25rem;
     font-weight: 700;
-
 }
+
 form {
     display: flex;
     align-items: center;
@@ -43,28 +51,35 @@ form {
     width: 100%;
 }
 
-.form__item {
-
+.form-item {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
 
     width: 100%;
-
 }
-.form__item label {
 
+.password-div {
+    position: relative;
+}
+.fa-eye {
+    position: absolute;
+    top: 43px;
+    right: 10px;
+    cursor: pointer;
+    color: #a4ad93;
+}
+
+.form-item label {
     padding: 0 0 0.3rem 0.3rem;
     display: flex;
     justify-content: flex-start;
-    font-family: var(--main-font);
     font-weight: 600;
     font-size: 0.75rem;
-
 }
-.form__item input {
 
+.form-item input {
     color: var(--green);
     font-weight: 400; 
     border: 1px solid var(--white);
@@ -72,53 +87,67 @@ form {
     padding: 0.6rem;
     box-shadow: 1px 1px 6px #0000001c;
     outline: none;
-
 }
-.form__item input::placeholder {
 
+.form-item input::placeholder {
     color: var(--green);
     font-family: var(--main-font);
-
 }
-.form__item input:hover {
 
+.form-item input:focus {
     outline: 1px solid var(--green);
-
 }
+
+.form-item.error input:focus {
+    outline: none;
+}
+
+.form-item.error input {
+    border-color: red;
+}
+
+.form-item .error{
+    color: red;
+    align-self: flex-start;
+    font-size: 0.75rem;
+    padding: 0.2rem 0 0 0.3rem;
+}
+
+.form-item .error{
+    color: red;
+    align-self: flex-start;
+    font-size: 0.75rem;
+    padding: 0.2rem 0 0 0.3rem;
+}
+
 form input[type="submit"] {
-    
     background-color: var(--green);
     color: var(--white);
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 1rem 0;
-    
+    margin: 2.5rem 0; 
 }
-form input[type="submit"]:hover {
 
+form input[type="submit"]:focus {
     background-color: var(--button-hover);
     letter-spacing: 0.5px;
     border-color: var(--green);
-
 }
 
-.login__link {
-
+.login-link {
     color: var(--green);
     text-decoration: none;
     font-size: 0.8rem;
-
+    font-family: var(--title-font);
 }
-.login__link:hover {
 
+.login-link:hover {
     color: var(--button-hover);
-    
 }
-.logo {
 
+.logo {
     width: 70px;
     height: 70px;
- 
 }
 
 @media (max-width: 768px) {
@@ -126,4 +155,11 @@ form input[type="submit"]:hover {
         padding: 5rem 4rem;
         width: unset;
     }
+
+    .fa-eye {
+        position: absolute;
+        top: 100px;
+        right: 10px;
+    }
+
 }
