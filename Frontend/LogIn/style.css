@@ -151,7 +151,7 @@ form button[type="submit"]:hover {
     border-color: #6b7459;
 }
 
-.signup__link {
+.signup__link, .forgotPassword__link {
 
     color: var(--green);
     text-decoration: none;
