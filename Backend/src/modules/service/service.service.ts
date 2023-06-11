@@ -43,15 +43,10 @@ export class ServiceService {
     }
 
 
-    async readWithUser(userId: string) {
-        const service = await this.prisma.service.findMany({
-            where: {
-                user_id_fk: userId
-            }
-        })
+    async readService() {
+        const service = await this.prisma.service.findMany()
 
         return service
     }
-
 
 }   
