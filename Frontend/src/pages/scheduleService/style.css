@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@1,400;1,700&display=swap');
+
+html {
+    display: flex;
+    justify-content: center;
+}
+
+body.body-scheduling {
+    background-color: var(--white);
+    font-family: var(--main-font);
+    color: var(--green);
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    height: 100vh;
+    padding: 2em;
+    width: 100%;
+    max-width: 500px;
+}
+
+section.description{
+    margin: 3.5rem 0;
+}
+
+.description-title {
+    font-size: 1.5rem;
+    font-family: var(--title-font);
+}
+
+.description-infos {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    padding-top: 0.7rem;
+    font-style: italic;
+}
+
+.description-time-info {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.timer-image {
+    width: 17px;
+    height: 17px;
+}
+
+.choices h3 {
+    margin-bottom: 1.5rem;
+}
+
+.choices h3, .day label  {
+    font-size: 1rem;
+    font-weight: 600; 
+}
+
+section.choices {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+div.staff, div.day, 
+div.hour-available {
+    margin-bottom: 2.5rem;
+}
+
+div.day {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 1rem;
+}
+
+.div-staff-input, 
+.div-hour-input {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.div-staff-input label, 
+.div-hour-input label {
+    padding-left: 0.4rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.div-staff-input + .div-staff-input, 
+.div-hour-input + .div-hour-input{
+    margin-top: 0.5rem;
+}
+
+.staff-input-item,
+.hour-input-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 2.3px solid var(--green);
+    border-radius: 50%;
+}
+
+.staff-input-item::before, 
+.hour-input-item::before {
+    content: "";
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 90ms transform ease-in-out;
+    box-shadow: inset 1rem 1rem var(--green);
+}
+
+.staff-input-item:checked::before,
+.hour-input-item:checked::before {
+    transform: scale(1);
+}
+
+.date-input {
+    color: var(--green);
+    border: 1.5px solid var(--green);
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+    cursor: pointer;
+
+    padding: 0.5rem;
+}
+
+.date-input:focus {
+    color: var(--white);
+    background: var(--green);
+}
+
+button {
+    background-color: var(--green);
+    color: var(--white);
+    border: 1.5px solid var(--white);
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    font-size: 1rem;
+    margin: 1rem 0;
+    padding: 0.6rem 1rem;
+}
+
+button:focus {
+    background-color: var(--button-hover);
+    letter-spacing: 0.5px;
+    border-color: var(--green);
+}

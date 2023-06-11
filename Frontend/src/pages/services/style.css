@@ -50,7 +50,7 @@ label {
 }
 
 .search::placeholder {
-    background-image: url('/img/pesquisar.svg');
+    background-image: url('../../assets/imgs/search_icon.svg');
     background-repeat: no-repeat;
 
     color: var(--green);
@@ -100,8 +100,8 @@ label {
 }
 
 .service-info-time {
-    padding-left: 1rem;
-    background-image: url('/img/timer.svg');
+    padding-left: 1.2rem;
+    background-image: url('../../assets/imgs/timer.svg'); 
     background-repeat: no-repeat;
-    background-size: 14px;
+    background-size: 0.9rem;
 }
