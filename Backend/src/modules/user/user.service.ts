@@ -14,22 +14,32 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
         try {
             const test = await this.readWithEmail(user.email)
 
+            console.log(!!test)
+
             if(!!test) return null;
+
+            
+            const hashToken = await hash(user.email, new Date().getTime())
+            console.log(hashToken)
 
             const createdUser = await this.prisma.user.create({
                 data: {
                     ...user,
                     AuthToken: {
                         create: {
-                            token: await hash(user.email, new Date().getTime()),
+                            token: hashToken,
                             expiration_date: new Date(Date.now() + this.authService.milisecondsInterval)
                         }
                     }
                 }
             });
+
+            console.log(createdUser)
+            
         
             return createdUser;
         } catch (error) {
+            console.log(error);
             return null;
         }
         
