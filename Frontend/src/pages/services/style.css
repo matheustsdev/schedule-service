@@ -32,7 +32,7 @@ main {
     align-items: center;
     justify-content: center;
 
-    padding: 1rem;
+    padding: 2.5rem;
 } 
 label {
     padding-bottom: 2rem;
@@ -45,7 +45,7 @@ label {
     border-radius: 10px;
     box-shadow: 1px 1px 6px #0000001c;
     outline: none;
-    padding: 0.6rem 1rem;
+    padding: 0.8rem 5rem;
     width: 100%;
 }
 
@@ -55,9 +55,9 @@ label {
 
     color: var(--green);
     font-family: var(--main-font);
-    font-size: 11px;
+    font-size: 1.2rem;
 
-    padding-left: 1.2rem;
+    padding-left: 1.8rem;
 
 }
 
@@ -73,20 +73,20 @@ label {
     border: 1px solid var(--white);
     border-radius: 10px;
     box-shadow: 1px 1px 6px #0000001c;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.3rem;
 }
 
 .service-type {
-    font-size: 0.75rem;
+    font-size: 1rem;
     color: var(--black);
 }
 
 .service-name {
     font-family: var(--title-font);
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    padding: 0.2rem 4rem 2rem 0;
+    padding: 0.2rem 9rem 3rem 0;
 }
 
 .service-infos {
@@ -96,12 +96,12 @@ label {
     flex-wrap: wrap;
 
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
 }
 
 .service-info-time {
-    padding-left: 1.2rem;
+    padding-left: 1.5rem;
     background-image: url('../../assets/imgs/timer.svg'); 
     background-repeat: no-repeat;
-    background-size: 0.9rem;
+    background-size: 1.3rem;
 }
