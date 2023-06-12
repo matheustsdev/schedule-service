@@ -43,6 +43,9 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
         const schedule = await this.prisma.schedule.findMany({
             where: {
                 user_id_fk: userId
+            },
+            include: {
+                Service: true
             }
         })
 

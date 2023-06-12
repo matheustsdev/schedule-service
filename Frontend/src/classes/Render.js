@@ -74,7 +74,6 @@ export class Render {
     }
         
     static append(element, html) {
-        console.log(html)
 
         element.innerHTML += html;
     }
