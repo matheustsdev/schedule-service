@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcar Serviço</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../../global.css">
+</head>
+
+<body class="body-scheduling">
+
+    <section class="description">
+        <h1 class="description-title">Lavagem Hidratante</h1>
+        <div class="description-infos">
+            <p class="description-time-info"><img class="timer-image" src="../../assets/imgs/timer.svg" alt="símbolo cronômetro">1 hora 30 min</p>  
+            <p class="description-price-info">R$90,00</p>
+        </div>
+    </section>
+    <section class="choices">
+        <div class="staff">
+            <h3>Selecione um profissional:</h3>
+            <div class="div-staff-input">
+                <input type="radio" id="choice1" name="staff-name" value="staff-choice1" class="staff-input-item" required>
+                <label class="staff-label" for="choice1">Profissional 1</label>
+            </div>
+            <div class="div-staff-input">
+                <input type="radio" id="choice2" name="staff-name" value="staff-choice2" class="staff-input-item">
+                <label class="staff-label" for="choice2">Profissional 2</label>
+            </div>
+            <div class="div-staff-input">
+                <input type="radio" id="choice3" name="staff-name" value="staff-choice3" class="staff-input-item">
+                <label class="staff-label" for="choice3">Profissional 3</label>
+            </div>
+            <div class="div-staff-input">
+                <input type="radio" id="random" name="staff-name" value="staff-random" class="staff-input-item">
+                <label class="staff-label" for="random">Sem preferência</label>
+            </div>
+        </div>
+        <div class="day">
+            <label for="date">Selecione o dia:</label>
+            <div class="input-div">
+                <input id="date" class="date-input" type="date"
+                tabindex="2" value="" min='' max=''/>
+            </div>
+        </div>
+        <div class="hour-available">
+            <h3>Selecione um horário disponível:</h3>
+            <div class="div-hour-input">
+                <input type="radio" id="hour1" name="hour-name" class="hour-input-item" value="hour-choice1">
+                <label for="hour1">13:40</label>
+            </div>
+            <div class="div-hour-input">
+                <input type="radio" id="hour2" name="hour-name" class="hour-input-item" value="hour-choice1">
+                <label for="hour2">14:30</label>
+            </div>
+            <div class="div-hour-input">
+                <input type="radio" id="hour3" name="hour-name" class="hour-input-item" value="hour-choice1">
+                <label for="hour3">15:40</label>
+            </div>
+            <div class="div-hour-input">
+                <input type="radio" id="hour4" name="hour-name" class="hour-input-item" value="hour-choice1">
+                <label for="hour4">16:50</label>
+            </div>
+        </div>
+    </section>
+    <div class="schedule-service-button">
+        <button type="submit">Marcar</button>
+    </div>
+
+
+
+
+    <script src="main.js"></script>
+</body>
+</html>

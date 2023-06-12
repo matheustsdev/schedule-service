@@ -5,13 +5,13 @@
     width: 100%;
     top: 0;
     left: 0;
-
 }
 
 #header ul {
     list-style: none;
     background-color: #6b7459;
     padding: 0 2.5rem;
+
 }
 
 #header ul li {

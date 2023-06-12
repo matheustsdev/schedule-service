@@ -2,10 +2,13 @@
 
     --white: #FFFFFF;
     --green: #6b7459;
-    --main-font: 'Source Sans Pro';
-    --title--font: 'PT Serif', serif;
-    --button-hover: #2e4a11;   /*  */
+    --purple: #785964;
+    --orange: #F79256;
+    --button-hover: #2e4a11;  
     --darker-white: #f5f6f9;
+
+    --main-font: 'Source Sans Pro';
+    --title-font: 'PT Serif', serif;
 }
 
 * {
