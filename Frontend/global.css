@@ -1,0 +1,27 @@
+:root {
+
+    --white: #FFFFFF;
+    --green: #6b7459;
+    --main-font: 'Source Sans Pro';
+    --title--font: 'PT Serif', serif;
+    --button-hover: #2e4a11;   /*  */
+    --darker-white: #f5f6f9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--main-font);
+    background-color: var(--white);
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 75%;
+	}
+}
+

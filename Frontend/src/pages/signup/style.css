@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+
+body {
+    background-color: var(--white);
+    font-family: var(--title--font);
+    color: var(--green);
+
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--darker-white);
+    padding: 2em 4rem;
+    border-radius: 16px;
+
+    width: 100%;
+    max-width: 500px;
+    
+    text-align: center;
+
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+h1 {
+    padding-bottom: 4rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+
+}
+form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form__item {
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+
+    width: 100%;
+
+}
+.form__item label {
+
+    padding: 0 0 0.3rem 0.3rem;
+    display: flex;
+    justify-content: flex-start;
+    font-family: var(--main-font);
+    font-weight: 600;
+    font-size: 0.75rem;
+
+}
+.form__item input {
+
+    color: var(--green);
+    font-weight: 400; 
+    border: 1px solid var(--white);
+    border-radius: 10px;
+    padding: 0.6rem;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+
+}
+.form__item input::placeholder {
+
+    color: var(--green);
+    font-family: var(--main-font);
+
+}
+.form__item input:hover {
+
+    outline: 1px solid var(--green);
+
+}
+form input[type="submit"] {
+    
+    background-color: var(--green);
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem 0;
+    
+}
+form input[type="submit"]:hover {
+
+    background-color: var(--button-hover);
+    letter-spacing: 0.5px;
+    border-color: var(--green);
+
+}
+
+.login__link {
+
+    color: var(--green);
+    text-decoration: none;
+    font-size: 0.8rem;
+
+}
+.login__link:hover {
+
+    color: var(--button-hover);
+    
+}
+.logo {
+
+    width: 70px;
+    height: 70px;
+ 
+}
+
+@media (max-width: 768px) {
+	main {
+        padding: 5rem 4rem;
+        width: unset;
+    }
+}

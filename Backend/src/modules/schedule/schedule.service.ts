@@ -1,23 +1,24 @@
-import { PrismaClient, Schedule } from "@prisma/client"
+import { Schedule } from "@prisma/client"
 import { ICreateScheduleDTO } from "./dtos/createSchedule.dto"
 import { IUpdateScheduleDTO } from "./dtos/updateSchedule.dto"
+import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD"
+import { Prisma } from "../../models/classes/Prisma"
 
-export class ScheduleService {
+export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDTO, IUpdateScheduleDTO> {
+    private prisma = Prisma.client
 
-    private prisma = new PrismaClient()
+    read(id: string): Promise<Schedule | null> {
+        throw new Error("Method not implemented.")
+    }
 
     async update(scheduleId: string, data: IUpdateScheduleDTO) {
-        try{
-            const updateSchedule = await this.prisma.schedule.update({
-                where: {
-                    schedule_id: scheduleId
-                }, 
-                data: data
-            })
-            return updateSchedule
-        } catch(ex){
-            console.log(ex)
-        }
+        const updateSchedule = await this.prisma.schedule.update({
+            where: {
+                schedule_id: scheduleId
+            }, 
+            data: data
+        })
+        return updateSchedule
     }
 
     async delete(scheduleId: string) {
@@ -26,25 +27,39 @@ export class ScheduleService {
                 schedule_id: scheduleId
             }
         })
-        return deleteSchedule ? deleteSchedule : {
-            error: "E02",
-            description: "Erro interno do servidor"
-        }
+
+        return deleteSchedule;
     }
 
-    async create(schedule: ICreateScheduleDTO): Promise<Schedule> {
-        try {
-            const createdSchedule = await this.prisma.schedule.create({
-                data: schedule
-            })
+    async create(schedule: ICreateScheduleDTO): Promise<Schedule>{
+        const createSchedule = await this.prisma.schedule.create({
+            data: schedule
+        })
 
-            return createdSchedule
-        } catch(e) {
-            console.log(e)
-        }
+        return createSchedule
+    }
 
-        return {} as Schedule
+    async readWithUser(userId: string) {
+        const schedule = await this.prisma.schedule.findMany({
+            where: {
+                user_id_fk: userId
+            },
+            include: {
+                Service: true
+            }
+        })
 
+        return schedule
+    }
+
+    async readWithService(serviceId: string) {
+        const schedule = await this.prisma.schedule.findMany({
+            where: {
+                service_id_fk: serviceId
+            }
+        })
+
+        return schedule
     }
 }
     

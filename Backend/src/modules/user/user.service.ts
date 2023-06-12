@@ -1,26 +1,51 @@
-import { PrismaClient, User } from "@prisma/client";
+import { AuthToken, User } from "@prisma/client";
 import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
+import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
+import { AuthService } from "../auth/auth.service";
+import { hash } from "bcrypt";
+import { Prisma } from "../../models/classes/Prisma";
 
-export class UserService {
-    private prisma = new PrismaClient()
+export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUserDTO> {
+    private prisma = Prisma.client
+    private authService = new AuthService()
 
-    async create(user: ICreateUserDTO): Promise<User> {
+    async create(user: ICreateUserDTO): Promise<User | null> {
         try {
+            const test = await this.readWithEmail(user.email)
+
+            console.log(!!test)
+
+            if(!!test) return null;
+
+            
+            const hashToken = await hash(user.email, new Date().getTime())
+            console.log(hashToken)
+
             const createdUser = await this.prisma.user.create({
-                data: user
-            })
+                data: {
+                    ...user,
+                    AuthToken: {
+                        create: {
+                            token: hashToken,
+                            expiration_date: new Date(Date.now() + this.authService.milisecondsInterval)
+                        }
+                    }
+                }
+            });
 
-            return createdUser
-        } catch(e) {
-            console.log(e)
+            console.log(createdUser)
+            
+        
+            return createdUser;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
-
-        return {} as User
-
+        
     }
 
-    async read(userId: string) {
+    async read(userId: string): Promise<User | null> {
         const user = await this.prisma.user.findUnique({
             where: {
                 user_id: userId
@@ -30,17 +55,7 @@ export class UserService {
         return user
     }
 
-    async readWithEmail(email: string) {
-        const user = await this.prisma.user.findUnique({
-            where: {
-                email
-            }
-        })
-
-        return user
-    }
-
-    async update(userId: string, data: IUpdateUserDTO) {
+    async update(userId: string, data: IUpdateUserDTO): Promise<User> {
         const updatedUser = await this.prisma.user.update({
             where: {
                 user_id: userId
@@ -51,16 +66,26 @@ export class UserService {
         return updatedUser
     }
 
-    async delete(userId: string) {
+    async delete(userId: string): Promise<User> {
         const deletedUser = await this.prisma.user.delete({
             where: {
                 user_id: userId
             }
         })
 
-        return deletedUser ? deletedUser : {
-            error: "E02",
-            description: "Erro interno do servidor"
-        }
+        return deletedUser;
+    }
+ 
+    async readWithEmail(email: string): Promise<User & {AuthToken: AuthToken[]} | null> {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                email
+            },
+            include: {
+                AuthToken: true
+            }
+        })
+
+        return user
     }
 }

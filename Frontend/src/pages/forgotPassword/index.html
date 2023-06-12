@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de senha</title>
+    <link rel="stylesheet" href="../../../global.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <main>
+        <h1 class="titulo">Recuperação de senha</h1>
+        <form method="get">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required placeholder="Digite seu e-mail" 
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
+            <button type="submit"> Recuperar senha </button>
+        </form>
+    </main>
+    <script type="module" src="./src/pages/forgotPassword/script.js"></script>
+</body>
+</html>
