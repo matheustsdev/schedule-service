@@ -17,7 +17,7 @@ body.body-scheduling {
     align-items: center;
     
     height: 100vh;
-    padding: 2em;
+    padding: 2rem;
     width: 100%;
     max-width: 500px;
 }
@@ -27,16 +27,17 @@ section.description{
 }
 
 .description-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-family: var(--title-font);
 }
 
 .description-infos {
     display: flex;
-    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 1.5rem;
 
+    font-size: 1.3rem;
     padding-top: 0.7rem;
     font-style: italic;
 }
@@ -57,7 +58,7 @@ section.description{
 }
 
 .choices h3, .day label  {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 600; 
 }
 
@@ -90,7 +91,7 @@ div.day {
 .div-staff-input label, 
 .div-hour-input label {
     padding-left: 0.4rem;
-    font-size: 1rem;
+    font-size: 1.3rem;
     cursor: pointer;
 }
 
@@ -109,17 +110,17 @@ div.day {
     -webkit-appearance: none;
     appearance: none;
 
-    width: 0.8rem;
-    height: 0.8rem;
-    border: 2.3px solid var(--green);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--green);
     border-radius: 50%;
 }
 
 .staff-input-item::before, 
 .hour-input-item::before {
     content: "";
-    width: 0.38rem;
-    height: 0.38rem;
+    width: 0.43rem;
+    height: 0.43rem;
     border-radius: 50%;
     transform: scale(0);
     transition: 90ms transform ease-in-out;
@@ -138,7 +139,7 @@ div.day {
     box-shadow: 1px 1px 6px #0000001c;
     outline: none;
     cursor: pointer;
-
+    font-size: 1.3rem;
     padding: 0.5rem;
 }
 
@@ -158,13 +159,13 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
 
-    font-size: 1rem;
+    font-size: 1.5rem;
     margin: 1rem 0;
-    padding: 0.6rem 1rem;
+    padding: 1.2rem 2rem;
 }
 
 button:focus {
     background-color: var(--button-hover);
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     border-color: var(--green);
 }
