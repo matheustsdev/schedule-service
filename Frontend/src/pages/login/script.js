@@ -11,7 +11,7 @@ form.addEventListener('submit', (e) => {
             password: e.target[1].value
         }
     }).then((response) => {
-        response.window.location.replace('/Frontend/src/pages/mySchedulings')
+       window.location.replace('/Frontend/src/pages/mySchedulings')
     }).catch((error) => {
     console.log(error)
     })
