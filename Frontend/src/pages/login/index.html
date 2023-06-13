@@ -9,8 +9,32 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <main></main>
+    <main>
+        <img class="logo" src="../../assets/imgs/Logo_maior.png">
+    <h1>Login</h1>
+    <form>
+        <div class="form__item">
+            <label for="email">E-mail:</label>
+            <input type="email"  requerid
+            id="email" name="user_email" class="login__container"  
+            placeholder="Digite seu e-mail" >
+        </div>
+        <div class="form__item">
+            <label for="senha">Senha:</label>
+            <input type="password" requerid
+            id="senha" name="user_password" class="login__container"
+            placeholder="Digite sua senha"
+            pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}">
+        </div>
+
+        <div class="form__item">
+            <input type="submit" requerid
+            id="submit" name="login" class="login__container"
+            value="Login">
+        </div>
+    </form>
+    </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script type="module" src="script.js"></script>
+<script type="module" src="./script.js" defer></script>
 </html>
