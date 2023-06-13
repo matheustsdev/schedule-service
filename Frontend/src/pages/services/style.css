@@ -114,14 +114,6 @@ label input {
     font-size: 0.875rem;
 }
 
-.service-info-time {
-    padding-left: 1.2rem;
-    background-image: url('../../assets/imgs/timer.svg'); 
-    background-repeat: no-repeat;
-    background-size: 0.9rem;
-    color: var(--white);
-}
-
 @media (max-width: 768px) {
     label {
         flex-direction: column;
