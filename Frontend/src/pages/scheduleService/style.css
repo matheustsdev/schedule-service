@@ -147,6 +147,13 @@ div.day {
     background: var(--green);
 }
 
+.choices .error{
+    color: red;
+    align-self: center;
+    font-size: 1rem;
+    padding-bottom: 0.7rem;
+}
+
 button {
     background-color: var(--green);
     color: var(--white);
