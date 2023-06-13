@@ -9,4 +9,5 @@ export enum EErrorCode {
     MISSING_HEADER_DATA = "E08",
     AUTHORIZATION_ERROR = "E09",
     INTERNAL_SERVER_ERROR = "E10",
+    INVALID_USER_ROLE = "E11",
 }

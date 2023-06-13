@@ -3,7 +3,7 @@ import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
 import { AuthService } from "../auth/auth.service";
-import { hash } from "bcrypt";
+import { hashSync } from "bcrypt";
 import { Prisma } from "../../models/classes/Prisma";
 
 export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUserDTO> {
@@ -14,13 +14,9 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
         try {
             const test = await this.readWithEmail(user.email)
 
-            console.log(!!test)
-
             if(!!test) return null;
-
             
-            const hashToken = await hash(user.email, new Date().getTime())
-            console.log(hashToken)
+            const hashToken = hashSync(user.email, user.salt)
 
             const createdUser = await this.prisma.user.create({
                 data: {
@@ -31,11 +27,11 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
                             expiration_date: new Date(Date.now() + this.authService.milisecondsInterval)
                         }
                     }
+                },
+                include: {
+                    AuthToken: true
                 }
-            });
-
-            console.log(createdUser)
-            
+            });            
         
             return createdUser;
         } catch (error) {
@@ -87,5 +83,18 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
         })
 
         return user
+    }
+
+    async readWithRole(role: string): Promise<User[]> {
+        const users = await this.prisma.user.findMany({
+            where: {
+                role
+            },
+            include: {
+                WorkersServices: true
+            }
+        })
+
+        return users
     }
 }
