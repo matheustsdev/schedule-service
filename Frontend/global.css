@@ -2,16 +2,24 @@
 
     --white: #FFFFFF;
     --green: #6b7459;
-    --main-font: 'Source Sans Pro';
-    --title-font: 'PT Serif', serif;
+    --purple: #785964;
+    --orange: #F79256;
     --button-hover: #2e4a11;  
     --darker-white: #f5f6f9;
+
+    --main-font: 'Source Sans Pro';
+    --title-font: 'PT Serif', serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    font-family: var(--main-font);
+    background-color: var(--white);
 }
 
 @media (max-width: 768px) {

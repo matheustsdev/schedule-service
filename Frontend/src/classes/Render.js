@@ -30,9 +30,16 @@ export class Render {
     }
 
     static async header() {
+        const screenWidth = window.innerWidth
+
+        window.addEventListener("resize", () => {                        
+            if(screenWidth <= 768 && window.innerWidth > 768 || screenWidth > 768 && window.innerWidth <= 768) {
+                window.location.reload()
+            }
+        })
 
         // Header html text
-        const headerText = await fetch("/Frontend/src/components/header/index.html").then(res => res.text())
+        const headerText = await fetch(`/Frontend/src/components/header/${screenWidth <= 768 ? "mobile" : "desktop"}.html`).then(res => res.text())
 
         // Nav html text
         const navStart = String(headerText).search(/<nav id="header">/g)
@@ -53,6 +60,23 @@ export class Render {
         // HTML injection
         this.append(headElement, style)
         this.inner(headerElement, nav)
+
+        // Header script
+        if( screen.width <= 768) {
+            document.querySelector("#header button").addEventListener("click", () => {
+                const openHeader = document.querySelector("#header")
+
+                openHeader.classList.toggle("active")
+            })
+
+            document.querySelector("#header ul img").addEventListener("click", () => {
+                const closeHeader = document.querySelector("#header")
+
+                closeHeader.classList.toggle("active")
+            })
+        }
+
+        
     }
 
     static head (html) {
@@ -74,7 +98,6 @@ export class Render {
     }
         
     static append(element, html) {
-        console.log(html)
 
         element.innerHTML += html;
     }

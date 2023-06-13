@@ -40,4 +40,11 @@ export class ServiceService implements IServiceCRUD<Service, ICreateServiceDTO, 
         return deleteService 
     }
 
+
+    async readService() {
+        const service = await this.prisma.service.findMany()
+
+        return service
+    }
+
 }   

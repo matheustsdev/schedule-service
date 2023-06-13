@@ -84,9 +84,25 @@ export class ServiceController implements IController {
         })
     }
 
+    private async readService() {
+        new Get<Service>("/service", async (request: Request, response: Response) => {
+           
+            const service = await this.serviceService.readService()
+
+            if(!service)
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Serviço não encontrado"
+                }))
+
+            return response.json(new StandartResponse<Service[]>(EResponseStatus.SUCESS, service))
+        })
+    }
+
     execute() {
         this.createService()
         this.updateService()
         this.deleteService()
+        this.readService()
     }
 }

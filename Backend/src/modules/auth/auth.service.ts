@@ -96,11 +96,15 @@ export class AuthService implements IService {
     }
 
     async createAuthToken(userId: string) {
-        const createdAuthToken = this.prisma.authToken.create({
+        const hashToken = await hash(userId, new Date().getTime())
+
+        console.log(hashToken)
+
+        const createdAuthToken = await this.prisma.authToken.create({
             data: {
                 user_id_fk: userId,
                 expiration_date: new Date(new Date().getTime() + this.milisecondsInterval),
-                token: await hash(userId, new Date().getTime())
+                token: hashToken
             }
         })
 
