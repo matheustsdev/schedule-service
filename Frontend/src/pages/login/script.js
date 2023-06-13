@@ -1,8 +1,6 @@
 import { Render } from "../../classes/Render.js"
 import { api } from "../../services/api.js"
 
-Render.header()
-
 const login = await api.get("/login").then((response) => response.data.data
 ).catch((error) => {
     console.log(error)
