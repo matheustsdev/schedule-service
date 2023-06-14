@@ -57,7 +57,8 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
                 user_id_fk: userId
             },
             include: {
-                Service: true
+                Service: true,
+                Worker: true
             }
         })
 

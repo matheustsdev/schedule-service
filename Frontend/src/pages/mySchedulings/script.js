@@ -21,7 +21,7 @@ Render.inner(mainElement, sortedSchedule.map(schedule => `
         <div id="${schedule.schedule_id}" class="schedule__item">
             <div class="item__name">
                 <h3>${schedule.Service.name}</h3>
-                <p>Profissional responsável</p>
+                <p>${schedule.Worker.name}</p>
             </div>
             <div class="item__datetime">
                 <div class="item__time">

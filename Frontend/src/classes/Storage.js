@@ -2,10 +2,10 @@ export class Storage{
     static user = localStorage.getItem("@user")
 
     static save(name, data){
-        localStorage.setItem(name, JSON.stringify(data))
+        localStorage.setItem(name, data)
     }
 
     static get(name) {
-        return JSON.parse(localStorage.getItem(name))
+        return localStorage.getItem(name)
     }
 }

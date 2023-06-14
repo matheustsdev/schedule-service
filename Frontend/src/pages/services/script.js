@@ -13,8 +13,6 @@ const services = await api.get('service', {
     console.log(err)
 })
 
-console.log(services)
-
 const listElement = document.querySelector('.service-list')
 
 Render.inner(listElement, services.map(service => 
