@@ -19,7 +19,7 @@ export class AuthService implements IService {
         return isAuthorized
     }
 
-    private async createJWT(user: User) {
+    public async createJWT(user: User) {
         const visibleUserData = {
             name: user.name,
             email: user.email,

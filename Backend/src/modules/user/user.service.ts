@@ -5,19 +5,20 @@ import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
 import { AuthService } from "../auth/auth.service";
 import { hashSync } from "bcrypt";
 import { Prisma } from "../../models/classes/Prisma";
+import { IService } from "../../models/interfaces/IService";
 
-export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUserDTO> {
+export class UserService implements IService {
     private prisma = Prisma.client
     private authService = new AuthService()
 
-    async create(user: ICreateUserDTO): Promise<User | null> {
+    async create(user: ICreateUserDTO): Promise<{jwt: string, auth_token: string} | null> {
         try {
             const test = await this.readWithEmail(user.email)
 
             if(!!test) return null;
             
             const hashToken = hashSync(user.email, user.salt)
-
+            
             const createdUser = await this.prisma.user.create({
                 data: {
                     ...user,
@@ -29,11 +30,13 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
                     }
                 },
                 include: {
-                    AuthToken: true
+                    AuthToken: true,
                 }
-            });            
+            });
+
+            const jwt = await this.authService.createJWT(createdUser)
         
-            return createdUser;
+            return {jwt, auth_token: createdUser.AuthToken[0].token};
         } catch (error) {
             console.log(error);
             return null;

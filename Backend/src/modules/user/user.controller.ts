@@ -67,7 +67,6 @@ export class UserController implements IController {
 
     private async createUser() {
         new Post<User>("/user/create", async (request: Request, response: Response) => {
-            console.log("Create user controller called")
             const { email, password, name, phone, role } = request.body as ICreateUserDTO
 
             const createdSalt = await genSalt(4)
@@ -88,7 +87,7 @@ export class UserController implements IController {
                     message: "Usuário já existe."
                 }))
 
-            return response.json(new StandartResponse<User>(EResponseStatus.SUCESS, createdUser))
+            return response.json(new StandartResponse(EResponseStatus.SUCESS, createdUser))
         })
     }
 
