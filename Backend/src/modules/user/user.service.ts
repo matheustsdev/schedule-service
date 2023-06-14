@@ -3,14 +3,15 @@ import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
 import { AuthService } from "../auth/auth.service";
-import { hash } from "bcrypt";
+import { hash, hashSync } from "bcrypt";
 import { Prisma } from "../../models/classes/Prisma";
+import { IService } from "../../models/interfaces/IService";
 
-export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUserDTO> {
+export class UserService implements IService {
     private prisma = Prisma.client
     private authService = new AuthService()
 
-    async create(user: ICreateUserDTO): Promise<User | null> {
+    async create(user: ICreateUserDTO): Promise<{jwt: string, auth_token: string} | null> {
         try {
             const test = await this.readWithEmail(user.email)
 
@@ -19,7 +20,7 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
             if(!!test) return null;
 
             
-            const hashToken = await hash(user.email, new Date().getTime())
+            const hashToken = hashSync(user.email, user.salt)
             console.log(hashToken)
 
             const createdUser = await this.prisma.user.create({
@@ -31,13 +32,16 @@ export class UserService implements IServiceCRUD<User, ICreateUserDTO, IUpdateUs
                             expiration_date: new Date(Date.now() + this.authService.milisecondsInterval)
                         }
                     }
+                },
+                include: {
+                    AuthToken: true,
                 }
             });
 
-            console.log(createdUser)
+            const jwt = await this.authService.createJWT(createdUser)
             
         
-            return createdUser;
+            return {jwt, auth_token: createdUser.AuthToken[0].token};
         } catch (error) {
             console.log(error);
             return null;
