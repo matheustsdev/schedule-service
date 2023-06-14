@@ -7,10 +7,8 @@ form.addEventListener("submit", (e) => {
     console.log(e.target[0].value)
 
     api.post("user/forgotPassword", {
-        data: {
-            email: e.target[0].value
-        }
-    }).then(response => response.data)
+        email: e.target[0].value
+    })
     .catch(error => console.log(error))
 })
 
