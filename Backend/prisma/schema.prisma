@@ -11,41 +11,55 @@ datasource db {
 }
 
 model User {
-  user_id           String      @id @default(uuid())
-  name              String
-  email             String      @unique
-  password          String
-  salt              String
-  phone             String?
-  role              String?
-  Schedule          Schedule[]
-  AuthToken         AuthToken[]
+  user_id         String            @id @default(uuid())
+  name            String
+  email           String            @unique
+  password        String
+  salt            String
+  phone           String?
+  role            String?
+  Schedule        Schedule[]        @relation("user")
+  WorkerSchedule  Schedule[]        @relation("worker")
+  AuthToken       AuthToken[]
+  WorkersServices WorkersServices[]
 }
 
 model AuthToken {
-  token_id          String      @id @default(uuid())
-  token             String      @unique
-  expiration_date   DateTime
-  user_id_fk        String
-  User              User        @relation(fields: [user_id_fk], references: [user_id])
+  token_id        String            @id @default(uuid())
+  token           String            @unique
+  expiration_date DateTime
+  user_id_fk      String
+  User            User              @relation(fields: [user_id_fk], references: [user_id])
 }
 
 model Service {
-  service_id        String      @id @default(uuid())
-  name              String      @unique
-  description       String?
-  price             Decimal
-  time              Int
-  Schedule          Schedule[]
+  service_id  String                @id @default(uuid())
+  name        String                @unique
+  description String?
+  price       Decimal
+  time        Int
+  Schedule    Schedule[]
+
+  WorkersServices WorkersServices[]
 }
 
 model Schedule {
-  schedule_id       String       @id @default(uuid())
-  start_time        DateTime
-  end_time          DateTime
-  description       String?
-  user_id_fk        String
-  service_id_fk     String
-  User              User         @relation(fields: [user_id_fk], references: [user_id])
-  Service           Service      @relation(fields: [service_id_fk], references: [service_id])
+  schedule_id   String              @id @default(uuid())
+  start_time    DateTime
+  end_time      DateTime
+  description   String?
+  user_id_fk    String
+  service_id_fk String
+  worker_id_fk  String
+  User          User                @relation(name: "user",fields: [user_id_fk], references: [user_id])
+  Service       Service             @relation(fields: [service_id_fk], references: [service_id])
+  Worker        User                @relation(name: "worker" ,fields: [worker_id_fk], references: [user_id])  
+}
+
+model WorkersServices {
+  workers_services_id String        @id @default(uuid())
+  user_id_fk          String
+  service_id_fk       String
+  User                User          @relation(fields: [user_id_fk], references: [user_id])
+  Service             Service       @relation(fields: [service_id_fk], references: [service_id])
 }

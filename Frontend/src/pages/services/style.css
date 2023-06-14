@@ -25,18 +25,14 @@ main {
 
     padding: 2rem;
 } 
-label {
+
+
+.service-button {
+    border: none;
     width: 100%;
-    padding-bottom: 2rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
-label input {
-    max-width: 400px;
-}
+
 .search {
     color: var(--green);
     font-weight: 400; 
@@ -45,7 +41,7 @@ label input {
     border-radius: 10px;
     box-shadow: 1px 1px 6px #0000001c;
     outline: none;
-    padding: 0.6rem 1rem;
+    padding: 0.8rem 5rem;
     width: 100%;
 }
 
@@ -55,9 +51,10 @@ label input {
 
     color: var(--green);
     font-family: var(--main-font);
+
     font-size: 0.75rem;
 
-    padding-left: 1.2rem;
+    padding-left: 1.8rem;
 
 }
 
@@ -73,6 +70,7 @@ label input {
     background-color: var(--green);
 
     border-radius: 10px;
+
     box-shadow: -4px 4px 6px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     margin-bottom: 1rem;
@@ -80,6 +78,10 @@ label input {
     list-style-type: none;
     color: var(--white);
     transition: all 0.2s ease;
+
+    border: none;
+    display: flex;
+    flex-direction: column;
 
 }
 
@@ -94,32 +96,47 @@ label input {
 .service-type {
     font-size: 0.75rem;
     color: var(--orange);
+
+    margin: 0;
 }
 
 .service-name {
     color: var(--white);
     font-family: var(--title-font);
+
     font-size: 1.25rem;
+  
     font-weight: 700;
-    padding: 0.2rem 4rem 2rem 0;
+    padding: 0.2rem 9rem 3rem 0;
 }
 
 .service-infos {
+    width: 100%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
 
     text-transform: uppercase;
+
     font-size: 0.875rem;
 }
 
 .service-info-time {
-    padding-left: 1.2rem;
-    background-image: url('../../assets/imgs/timer.svg'); 
-    background-repeat: no-repeat;
-    background-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+
+}
+
+.service-info-time img{
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.service-info-time p {
     color: var(--white);
+
 }
 
 @media (max-width: 768px) {
@@ -132,4 +149,178 @@ label input {
     h1 {
         font-size: 3rem;
     }
+}
+
+/* Modal Content Style */
+
+.modal .body-scheduling {
+    background-color: var(--white);
+    font-family: var(--main-font);
+    color: var(--green);
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    height: 100vh;
+    padding: 2em;
+    width: 100%;
+    max-width: 500px;
+}
+
+.modal section.description{
+    margin: 3.5rem 0;
+}
+
+.modal .description-title {
+    font-size: 1.5rem;
+    font-family: var(--title-font);
+}
+
+.modal .description-infos {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    padding-top: 0.7rem;
+    font-style: italic;
+}
+
+.modal .description-time-info {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.modal .timer-image {
+    width: 17px;
+    height: 17px;
+}
+
+.modal .choices h3 {
+    margin-bottom: 1.5rem;
+}
+
+.modal .choices h3, .day label  {
+    font-size: 1rem;
+    font-weight: 600; 
+}
+
+.modal section.choices {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.modal div.staff, div.day, 
+.modal div.hour-available {
+    margin-bottom: 2.5rem;
+}
+
+.modal div.day {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 1rem;
+}
+
+.modal .div-staff-input, 
+.modal .div-hour-input {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+
+.modal .div-staff-input label, 
+.modal .div-hour-input label {
+    margin: 0;
+    padding-left: 0.4rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal .div-staff-input + .div-staff-input, 
+.modal .div-hour-input + .div-hour-input{
+    margin-top: 0.5rem;
+}
+
+.modal .staff-input-item,
+.modal .hour-input-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 2.3px solid var(--green);
+    border-radius: 50%;
+}
+
+.modal .staff-input-item::before, 
+.modal .hour-input-item::before {
+    content: "";
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 90ms transform ease-in-out;
+    box-shadow: inset 1rem 1rem var(--green);
+}
+
+.modal .staff-input-item:checked::before,
+.modal .hour-input-item:checked::before {
+    transform: scale(1);
+}
+
+.modal .date-input {
+    color: var(--green);
+    border: 1.5px solid var(--green);
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+    cursor: pointer;
+
+    padding: 0.5rem;
+}
+
+.modal .date-input:focus {
+    color: var(--white);
+    background: var(--green);
+}
+
+.modal .choices .error{
+    color: red;
+    align-self: center;
+    font-size: 1rem;
+    padding-bottom: 0.7rem;
+}
+
+.modal .schedule-service-button button {
+    background-color: var(--green);
+    color: var(--white);
+    border: 1.5px solid var(--white);
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    font-size: 1rem;
+    margin: 1rem 0;
+    padding: 0.6rem 1rem;
+}
+
+.modal .schedule-service-button button:focus {
+    background-color: var(--button-hover);
+    letter-spacing: 0.5px;
+    border-color: var(--green);
 }

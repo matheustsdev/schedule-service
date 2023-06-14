@@ -16,10 +16,12 @@ import { StandartResponse } from "../../models/classes/StandartResponse";
 import { EResponseStatus } from "../../models/enums/EResponseStatus";
 import { EErrorCode } from "../../models/enums/EErrorCode";
 import { authorizationMiddleware } from "../../middlewares/authorization";
+import { UserService } from "../user/user.service";
 
 export class ServiceController implements IController {
 
     private serviceService: ServiceService = new ServiceService();
+    private userService: UserService = new UserService();
 
     private async createService() {
         new Post("/service/create", async (request: Request, response: Response) => {
@@ -99,10 +101,44 @@ export class ServiceController implements IController {
         })
     }
 
+    private async createWorkerService() {
+        new Post("/service/createWorkerService", async (request: Request, response: Response) => {
+            const { userId, serviceId } = request.body
+
+            const user = await this.userService.read(userId)
+
+            if(!user) {
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Usuário não encontrado."
+                }))
+            }
+
+            if(user.role !== "worker") {
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.INVALID_USER_ROLE,
+                    message: "Usuário não é um prestador de serviço."
+                }))
+            }
+
+            const createdWorkerService = await this.serviceService.createWorkerService(userId, serviceId)
+
+            if(!createdWorkerService) {
+                return response.json(new StandartResponse<Service>(EResponseStatus.ERROR, {} as Service, {
+                    code: EErrorCode.INTERNAL_SERVER_ERROR,
+                    message: "Falha ao criar o serviço."
+                }))
+            }
+
+            return response.json(createdWorkerService)
+        }, authorizationMiddleware)
+    }
+
     execute() {
         this.createService()
         this.updateService()
         this.deleteService()
         this.readService()
+        this.createWorkerService()
     }
 }

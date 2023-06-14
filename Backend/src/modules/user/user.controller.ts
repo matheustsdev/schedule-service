@@ -139,6 +139,20 @@ export class UserController implements IController {
         }, authorizationMiddleware)
     }
 
+    private async getWorkers() {
+        new Get<User[]>("/user/workers", async (request: Request, response: Response) => {
+            const workers = await this.userService.readWithRole("worker")
+
+            if(!workers)
+                return response.json(new StandartResponse<User[]>(EResponseStatus.ERROR, [] as User[], {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Nenhum usuário encontrado"
+                }))
+
+            return response.json(new StandartResponse<User[]>(EResponseStatus.SUCESS, workers))
+        }, authorizationMiddleware)
+    }
+
     private async forgotPassword() {
         new Post<boolean>("/user/forgotPassword", async (request: Request, response: Response) => {
             const { email } = request.body
@@ -202,6 +216,7 @@ export class UserController implements IController {
         this.deleteUser()
         this.updateUser()
         this.getUserByEmail()
+        this.getWorkers()
         this.forgotPassword()
     }
 }

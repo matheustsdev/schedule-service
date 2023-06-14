@@ -3,7 +3,7 @@ import { ICreateUserDTO } from "./dtos/createUser.dto";
 import { IUpdateUserDTO } from "./dtos/updateUser.dto";
 import { IServiceCRUD } from "../../models/interfaces/IServiceCRUD";
 import { AuthService } from "../auth/auth.service";
-import { hash, hashSync } from "bcrypt";
+import { hashSync } from "bcrypt";
 import { Prisma } from "../../models/classes/Prisma";
 import { IService } from "../../models/interfaces/IService";
 
@@ -15,14 +15,10 @@ export class UserService implements IService {
         try {
             const test = await this.readWithEmail(user.email)
 
-            console.log(!!test)
-
             if(!!test) return null;
-
             
             const hashToken = hashSync(user.email, user.salt)
-            console.log(hashToken)
-
+            
             const createdUser = await this.prisma.user.create({
                 data: {
                     ...user,
@@ -39,7 +35,6 @@ export class UserService implements IService {
             });
 
             const jwt = await this.authService.createJWT(createdUser)
-            
         
             return {jwt, auth_token: createdUser.AuthToken[0].token};
         } catch (error) {
@@ -91,5 +86,18 @@ export class UserService implements IService {
         })
 
         return user
+    }
+
+    async readWithRole(role: string): Promise<User[]> {
+        const users = await this.prisma.user.findMany({
+            where: {
+                role
+            },
+            include: {
+                WorkersServices: true
+            }
+        })
+
+        return users
     }
 }

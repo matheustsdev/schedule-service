@@ -42,9 +42,28 @@ export class ServiceService implements IServiceCRUD<Service, ICreateServiceDTO, 
 
 
     async readService() {
-        const service = await this.prisma.service.findMany()
+        const service = await this.prisma.service.findMany({
+            include: {
+                WorkersServices: {
+                    select: {
+                        User: true
+                    }
+                }
+            }
+        })
 
         return service
+    }
+
+    async createWorkerService(userId: string, serviceId: string) {
+        const createdWorkerService = await this.prisma.workersServices.create({
+            data: {
+                user_id_fk: userId,
+                service_id_fk: serviceId
+            }
+        })
+
+        return createdWorkerService
     }
 
 }   
