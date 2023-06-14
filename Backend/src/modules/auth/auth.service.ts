@@ -98,8 +98,6 @@ export class AuthService implements IService {
     async createAuthToken(userId: string) {
         const hashToken = await hash(userId, new Date().getTime())
 
-        console.log(hashToken)
-
         const createdAuthToken = await this.prisma.authToken.create({
             data: {
                 user_id_fk: userId,
