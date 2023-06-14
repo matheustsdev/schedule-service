@@ -5,5 +5,6 @@ export interface ICreateScheduleDTO{
     end_time: Date     
     description: string  
     user_id_fk: string
+    worker_id_fk: string
     service_id_fk: string
 }

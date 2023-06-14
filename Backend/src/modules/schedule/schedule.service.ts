@@ -32,8 +32,20 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
     }
 
     async create(schedule: ICreateScheduleDTO): Promise<Schedule>{
+        const user = await this.prisma.user.findUnique({
+            where: {
+                user_id: schedule.user_id_fk
+            }
+        })
+
+        if(!user) {
+            return {} as Schedule
+        }
+
         const createSchedule = await this.prisma.schedule.create({
-            data: schedule
+            data: {
+                ...schedule
+            }
         })
 
         return createSchedule
@@ -60,6 +72,51 @@ export class ScheduleService implements IServiceCRUD<Schedule, ICreateScheduleDT
         })
 
         return schedule
+    }
+
+    async availableSchedules(workerId: string, serviceId: string, date: Date) {
+
+        const schedules = await this.prisma.schedule.findMany({
+            where: {
+                worker_id_fk: workerId,
+                service_id_fk: serviceId,
+                start_time: {
+                    gte: date
+                }
+            }
+        })
+
+        const service = await this.prisma.service.findUnique({
+            where: {
+                service_id: serviceId
+            }
+        })
+
+        if(!service) {
+           return [] 
+        }
+
+        const openTime = new Date(new Date(date).setHours(9, 0, 0, 0))
+        const closeTime = new Date(new Date(date).setHours(18, 0, 0, 0))
+        
+        
+        const serviceTime = service.time * 60 * 1000;
+
+        let availableSchedules: Date[] = []
+
+        for(let i = openTime.getTime(); i < closeTime.getTime(); i += serviceTime) {
+            const isAvailable = schedules.find(schedule => {
+                return i >= new Date(schedule.start_time).getTime() && i < new Date(schedule.end_time).getTime() || i + serviceTime > new Date(schedule.start_time).getTime() && i + serviceTime <= new Date(schedule.end_time).getTime()
+            })
+
+            console.log(new Date(i))
+
+            if(!isAvailable)
+                availableSchedules.push(new Date(i))
+
+        }
+
+        return availableSchedules
     }
 }
     

@@ -91,13 +91,14 @@ export class ScheduleController implements IController{
 
     private async createSchedule() {
         new Post<Schedule>("/schedule/create", async (request: Request, response: Response) => {
-            const { start_time, end_time, description, user_id_fk, service_id_fk } = request.body as ICreateScheduleDTO
+            const { start_time, end_time, description, user_id_fk, service_id_fk, worker_id_fk } = request.body as ICreateScheduleDTO
 
             const createdSchedule = await this.scheduleService.create({
-                start_time: start_time,
-                end_time: end_time,
+                start_time: new Date(start_time),
+                end_time: new Date(end_time),
                 description: description,
                 user_id_fk: user_id_fk,
+                worker_id_fk: worker_id_fk,
                 service_id_fk: service_id_fk
             })
             
@@ -134,12 +135,37 @@ export class ScheduleController implements IController{
         })
     }
 
+    private async getAvailableSchedules() {
+        new Post<Date[]>("/schedule/available", async (request: Request, response: Response) => {
+            const { serviceId, userId, date } = request.body
+                    
+            const UTCDate = new Date(date)
+
+            if(!serviceId) 
+                return response.json(new StandartResponse<Date[]>(EResponseStatus.ERROR, [], {
+                    code: EErrorCode.MISSING_BODY_DATA,
+                    message: "Query 'serviceId' não informada"
+                }))
+
+            const schedule = await this.scheduleService.availableSchedules(userId, serviceId, UTCDate)
+
+            if(!schedule)
+                return response.json(new StandartResponse<Date[]>(EResponseStatus.ERROR, [], {
+                    code: EErrorCode.DATA_NOT_FOUND,
+                    message: "Agendamento não encontrado"
+                }))
+
+            return response.json(new StandartResponse<Date[]>(EResponseStatus.SUCESS, schedule))
+        })
+    }
+
     execute(){
         this.deleteSchedule(),
         this.createSchedule()
         this.updateSchedule(),
         this.getScheduleByUser(),
         this.getScheduleByService()
+        this.getAvailableSchedules()
     }
 
 } 

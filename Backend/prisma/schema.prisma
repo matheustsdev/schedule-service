@@ -18,7 +18,8 @@ model User {
   salt            String
   phone           String?
   role            String?
-  Schedule        Schedule[]
+  Schedule        Schedule[]        @relation("user")
+  WorkerSchedule  Schedule[]        @relation("worker")
   AuthToken       AuthToken[]
   WorkersServices WorkersServices[]
 }
@@ -49,8 +50,10 @@ model Schedule {
   description   String?
   user_id_fk    String
   service_id_fk String
-  User          User                @relation(fields: [user_id_fk], references: [user_id])
+  worker_id_fk  String
+  User          User                @relation(name: "user",fields: [user_id_fk], references: [user_id])
   Service       Service             @relation(fields: [service_id_fk], references: [service_id])
+  Worker        User                @relation(name: "worker" ,fields: [worker_id_fk], references: [user_id])  
 }
 
 model WorkersServices {
